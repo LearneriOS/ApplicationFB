@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="POORegistrationViewController">
+            <connections>
+                <outlet property="smsPassword" destination="mz0-AZ-pND" id="Fjv-fD-NFR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mz0-AZ-pND">
+                    <rect key="frame" x="112" y="269" width="97" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="mz0-AZ-pND" secondAttribute="bottom" constant="269" id="5xZ-ef-EjV"/>
+                <constraint firstItem="mz0-AZ-pND" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="112" id="SCf-J3-4hh"/>
+                <constraint firstItem="mz0-AZ-pND" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="269" id="XXc-I8-kn8"/>
+                <constraint firstAttribute="trailing" secondItem="mz0-AZ-pND" secondAttribute="trailing" constant="111" id="aT2-87-okl"/>
+            </constraints>
+            <point key="canvasLocation" x="433" y="392"/>
+        </view>
+    </objects>
+</document>
