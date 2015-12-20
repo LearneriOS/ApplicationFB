@@ -13,6 +13,8 @@
 #import "POFriendsListViewController.h"
 #import "POOWebController.h"
 #import "POOFeedViewController.h"
+#import "POORegistrationViewController.h"
+#import "vkSdk.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -25,6 +27,7 @@
 @property (nonatomic, strong) POOFriendPhotoViewController *friendPhotoViewController;
 @property (nonatomic, strong) POOWebController *webViewController;
 @property (nonatomic, strong) POOFeedViewController *feedViewController;
+@property (nonatomic, strong) POORegistrationViewController *registrationViewController;
 
 @end
 

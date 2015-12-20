@@ -10,4 +10,6 @@
 
 @interface POORegistrationViewController : UIViewController
 
+- (void) vkRegistration;
+
 @end

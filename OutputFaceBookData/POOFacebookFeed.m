@@ -33,7 +33,7 @@
         }
     }
     self.images = pictures;
-    NSLog(@"-------------- %@ --------------",self.images);
+    
     return self;
 }
 

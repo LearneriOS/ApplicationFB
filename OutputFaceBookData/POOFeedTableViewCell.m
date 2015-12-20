@@ -89,21 +89,23 @@
 
 - (void)updateConstraints {
     [super updateConstraints];
-    
-    self.messageHeightConstrain.constant = [[self class] hieghtWithMessage:self.message.text image:[[self class] setCollectionViewContentSize:imageCounter itemSize:imageHeight] time:self.creatTime.text maxWighth:CGRectGetWidth(self.bounds)];
-    self.messageWidthConstrain.constant = CGRectGetWidth(self.bounds);
-    
-    self.collectionHeightConstrain.constant = [[self class] hieghtWithMessage:self.message.text image:[[self class] setCollectionViewContentSize:imageCounter itemSize:imageHeight] time:self.creatTime.text maxWighth:CGRectGetWidth(self.bounds)];
-    self.collectionWidthConstrain.constant = CGRectGetWidth(self.bounds);
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[message]-0-|" options:0 metrics:@{} views:@{@"message" : _message}]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[message]-0-[collectionView]-30-|" options:0 metrics:@{} views:@{@"message": _message, @"collectionView": _collectionView}]];
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[collectionView]-0-|" options:0 metrics:@{} views:@{ @"collectionView": _collectionView}]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[collectionView]" options:0 metrics:@{} views:@{ @"collectionView": _collectionView}]];
+    NSLog(@"%li",self.constraints.count);
+    if (self.constraints.count == 0) {
+        self.messageHeightConstrain.constant = [[self class] hieghtWithMessage:self.message.text image:[[self class] setCollectionViewContentSize:imageCounter itemSize:imageHeight] time:self.creatTime.text maxWighth:CGRectGetWidth(self.bounds)];
+        self.messageWidthConstrain.constant = CGRectGetWidth(self.bounds);
+        
+        self.collectionHeightConstrain.constant = [[self class] hieghtWithMessage:self.message.text image:[[self class] setCollectionViewContentSize:imageCounter itemSize:imageHeight] time:self.creatTime.text maxWighth:CGRectGetWidth(self.bounds)];
+        self.collectionWidthConstrain.constant = CGRectGetWidth(self.bounds);
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[message]-0-|" options:0 metrics:@{} views:@{@"message" : _message}]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[message]-0-[collectionView]-30-|" options:0 metrics:@{} views:@{@"message": _message, @"collectionView": _collectionView}]];
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[collectionView]-0-|" options:0 metrics:@{} views:@{ @"collectionView": _collectionView}]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[collectionView]" options:0 metrics:@{} views:@{ @"collectionView": _collectionView}]];
 
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-185-[time]-5-|" options:0 metrics:@{} views:@{@"time" : _creatTime}]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[time]-5-|" options:0 metrics:@{} views:@{@"time" : _creatTime}]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-185-[time]-5-|" options:0 metrics:@{} views:@{@"time" : _creatTime}]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[time]-5-|" options:0 metrics:@{} views:@{@"time" : _creatTime}]];
+    }
 }
 
 

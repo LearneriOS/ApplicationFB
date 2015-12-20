@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    
 <dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -23,6 +22,8 @@
 		<string>fb-messenger-platform-20150128</string>
 		<string>fb-messenger-platform-20150218</string>
 		<string>fb-messenger-platform-20150305</string>
+        <string>vk</string>
+        <string>vkauthorize</string>
 	</array>
 	<key>CFBundleTypeRole</key>
 	<string>Editor</string>
@@ -31,6 +32,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>vk5187957</string>
 				<string>fb411460109065158</string>
 			</array>
 		</dict>
@@ -41,30 +43,8 @@
 	<string>OutputFaceBookData</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>facebook.com</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-			<key>fbcdn.net</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-			<key>akamaihd.net</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-		</dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -100,12 +80,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
 </dict>
-
 </plist>

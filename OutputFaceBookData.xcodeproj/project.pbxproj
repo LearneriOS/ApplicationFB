@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5791B2D5C26160ED45146CA2 /* Pods_OutputFaceBookData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040808CE55AAAB5B51A2F /* Pods_OutputFaceBookData.framework */; };
+		D20749521C206AEC00A6EB2A /* POORegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */; };
+		D20749561C22E96900A6EB2A /* VKEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D20749551C22E96900A6EB2A /* VKEnterViewController.m */; };
+		D20749581C22ED1300A6EB2A /* WhiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D20749571C22ED1300A6EB2A /* WhiteArrow@2x.png */; };
+		D207495A1C22F28E00A6EB2A /* SendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D20749591C22F28E00A6EB2A /* SendButton@2x.png */; };
+		D207495C1C22F29E00A6EB2A /* SendButton_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D207495B1C22F29E00A6EB2A /* SendButton_pressed@2x.png */; };
+		D20749651C24230E00A6EB2A /* Header_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D20749641C24230E00A6EB2A /* Header_black@2x.png */; };
 		D225FB851BDA398900711C53 /* POOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D225FB841BDA398900711C53 /* POOCache.m */; };
 		D225FB8A1BDA6CE100711C53 /* String+Md5.m in Sources */ = {isa = PBXBuildFile; fileRef = D225FB891BDA6CE100711C53 /* String+Md5.m */; };
+		D2310F891C1C9161000B68D9 /* Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2310F881C1C9161000B68D9 /* Background@2x.png */; };
+		D2310F8D1C1EF0F6000B68D9 /* RegButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2310F8C1C1EF0F6000B68D9 /* RegButton@2x.png */; };
 		D24BAD2C1BE7B1BF003C96A9 /* POOFacebookFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAD2B1BE7B1BF003C96A9 /* POOFacebookFeed.m */; };
 		D24BAD301BE7B7E0003C96A9 /* POOFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAD2E1BE7B7E0003C96A9 /* POOFeedTableViewCell.m */; };
 		D24BAD311BE7B7E0003C96A9 /* POOFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D24BAD2F1BE7B7E0003C96A9 /* POOFeedTableViewCell.xib */; };
@@ -25,23 +34,38 @@
 		D2A8CBC01BC7A94B006BF1F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A8CBBF1BC7A94B006BF1F6 /* CoreGraphics.framework */; };
 		D2A8CBC31BC7A979006BF1F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A8CBBD1BC7A93F006BF1F6 /* Foundation.framework */; };
 		D2A8CBCB1BC7A9B1006BF1F6 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A8CBC41BC7A9B1006BF1F6 /* Bolts.framework */; };
-		D2A8CBCC1BC7A9B1006BF1F6 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D2A8CBC51BC7A9B1006BF1F6 /* FacebookSDKStrings.bundle */; };
 		D2A8CBCE1BC7A9B1006BF1F6 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A8CBC71BC7A9B1006BF1F6 /* FBSDKCoreKit.framework */; };
 		D2A8CBCF1BC7A9B1006BF1F6 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A8CBC81BC7A9B1006BF1F6 /* FBSDKLoginKit.framework */; };
 		D2A8CBD51BC7B874006BF1F6 /* POOTESTFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A8CBD41BC7B874006BF1F6 /* POOTESTFriend.m */; };
 		D2A8CBDF1BC7CD9A006BF1F6 /* POFriendsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A8CBDD1BC7CD9A006BF1F6 /* POFriendsListViewController.m */; };
 		D2C43ABD1BE3AE7000E0C170 /* POOWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C43ABC1BE3AE7000E0C170 /* POOWebController.m */; };
-		D2E981361BC8286F00A798E3 /* POOModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E981351BC8286F00A798E3 /* POOModel.m */; };
+		D2DA3A441C1C79810043AD5A /* LoginButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2DA3A431C1C79810043AD5A /* LoginButton@2x.png */; };
+		D2DA3A461C1C820C0043AD5A /* Header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2DA3A451C1C820C0043AD5A /* Header@2x.png */; };
+		D2FBF0071C1F0BAC005CEACA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FBF0061C1F0BAC005CEACA /* SafariServices.framework */; };
 		D2FE07CB1BD4E6B7004E0C95 /* POOCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FE07C91BD4E6B7004E0C95 /* POOCollectionViewCell.m */; };
 		D2FE07CC1BD4E6B7004E0C95 /* POOCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FE07CA1BD4E6B7004E0C95 /* POOCollectionViewCell.xib */; };
 		D2FE07D51BD52BA2004E0C95 /* POOFriendPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FE07D41BD52BA2004E0C95 /* POOFriendPhotoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00DD6C2D9FF0CDE3ACDEE050 /* Pods-OutputFaceBookData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutputFaceBookData.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OutputFaceBookData/Pods-OutputFaceBookData.debug.xcconfig"; sourceTree = "<group>"; };
+		0954B568C54480590B5A8386 /* Pods-OutputFaceBookData.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutputFaceBookData.release.xcconfig"; path = "Pods/Target Support Files/Pods-OutputFaceBookData/Pods-OutputFaceBookData.release.xcconfig"; sourceTree = "<group>"; };
+		43E040808CE55AAAB5B51A2F /* Pods_OutputFaceBookData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OutputFaceBookData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D20749471C20365E00A6EB2A /* VK_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VK_ios_sdk.framework; path = "Pods/../build/Debug-iphoneos/VK_ios_sdk.framework"; sourceTree = "<group>"; };
+		D20749501C206AEC00A6EB2A /* POORegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POORegistrationViewController.h; sourceTree = "<group>"; };
+		D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POORegistrationViewController.m; sourceTree = "<group>"; };
+		D20749541C22E96900A6EB2A /* VKEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKEnterViewController.h; sourceTree = "<group>"; };
+		D20749551C22E96900A6EB2A /* VKEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKEnterViewController.m; sourceTree = "<group>"; };
+		D20749571C22ED1300A6EB2A /* WhiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WhiteArrow@2x.png"; path = "../Downloads/Messenger_Retina/WhiteArrow@2x.png"; sourceTree = "<group>"; };
+		D20749591C22F28E00A6EB2A /* SendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SendButton@2x.png"; path = "../Downloads/Messenger_Retina/SendButton@2x.png"; sourceTree = "<group>"; };
+		D207495B1C22F29E00A6EB2A /* SendButton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SendButton_pressed@2x.png"; path = "../Downloads/Messenger_Retina/SendButton_pressed@2x.png"; sourceTree = "<group>"; };
+		D20749641C24230E00A6EB2A /* Header_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Header_black@2x.png"; path = "../Downloads/Messenger_Retina/Header_black@2x.png"; sourceTree = "<group>"; };
 		D225FB831BDA398900711C53 /* POOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOCache.h; sourceTree = "<group>"; };
 		D225FB841BDA398900711C53 /* POOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOCache.m; sourceTree = "<group>"; };
 		D225FB881BDA6CE100711C53 /* String+Md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "String+Md5.h"; sourceTree = "<group>"; };
 		D225FB891BDA6CE100711C53 /* String+Md5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "String+Md5.m"; sourceTree = "<group>"; };
+		D2310F881C1C9161000B68D9 /* Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background@2x.png"; sourceTree = "<group>"; };
+		D2310F8C1C1EF0F6000B68D9 /* RegButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RegButton@2x.png"; sourceTree = "<group>"; };
 		D24BAC2E1BE7A5F2003C96A9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D24BAC301BE7A641003C96A9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D24BAD2A1BE7B1BF003C96A9 /* POOFacebookFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOFacebookFeed.h; sourceTree = "<group>"; };
@@ -53,6 +77,7 @@
 		D24BAD331BE7C0E4003C96A9 /* POOFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOFeedViewController.m; sourceTree = "<group>"; };
 		D25412D81BF20CC7000BD9D3 /* POOCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOCollectionViewLayout.h; sourceTree = "<group>"; };
 		D25412D91BF20CC7000BD9D3 /* POOCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOCollectionViewLayout.m; sourceTree = "<group>"; };
+		D26773761C1F1E8B00CDB8D5 /* libVKSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libVKSdk.a; path = "../Downloads/vk-ios-sdk-master/build/Debug-iphoneos/libVKSdk.a"; sourceTree = "<group>"; };
 		D29287381BCBFCDE0089E3BE /* POOTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOTableViewCell.h; sourceTree = "<group>"; };
 		D29287391BCBFCDE0089E3BE /* POOTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOTableViewCell.m; sourceTree = "<group>"; };
 		D292873A1BCBFCDE0089E3BE /* POOTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POOTableViewCell.xib; sourceTree = "<group>"; };
@@ -69,7 +94,6 @@
 		D2A8CBBD1BC7A93F006BF1F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2A8CBBF1BC7A94B006BF1F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D2A8CBC41BC7A9B1006BF1F6 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../WorkWithFaceBook/WorkWithFaceBook/Bolts.framework; sourceTree = "<group>"; };
-		D2A8CBC51BC7A9B1006BF1F6 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKStrings.bundle; path = ../WorkWithFaceBook/WorkWithFaceBook/FacebookSDKStrings.bundle; sourceTree = "<group>"; };
 		D2A8CBC61BC7A9B1006BF1F6 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../WorkWithFaceBook/WorkWithFaceBook/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		D2A8CBC71BC7A9B1006BF1F6 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../WorkWithFaceBook/WorkWithFaceBook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		D2A8CBC81BC7A9B1006BF1F6 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../WorkWithFaceBook/WorkWithFaceBook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -81,8 +105,9 @@
 		D2A8CBDD1BC7CD9A006BF1F6 /* POFriendsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POFriendsListViewController.m; sourceTree = "<group>"; };
 		D2C43ABB1BE3AE7000E0C170 /* POOWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOWebController.h; sourceTree = "<group>"; };
 		D2C43ABC1BE3AE7000E0C170 /* POOWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOWebController.m; sourceTree = "<group>"; };
-		D2E981341BC8286F00A798E3 /* POOModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOModel.h; sourceTree = "<group>"; };
-		D2E981351BC8286F00A798E3 /* POOModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOModel.m; sourceTree = "<group>"; };
+		D2DA3A431C1C79810043AD5A /* LoginButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LoginButton@2x.png"; sourceTree = "<group>"; };
+		D2DA3A451C1C820C0043AD5A /* Header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Header@2x.png"; sourceTree = "<group>"; };
+		D2FBF0061C1F0BAC005CEACA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		D2FE07C81BD4E6B7004E0C95 /* POOCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOCollectionViewCell.h; sourceTree = "<group>"; };
 		D2FE07C91BD4E6B7004E0C95 /* POOCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOCollectionViewCell.m; sourceTree = "<group>"; };
 		D2FE07CA1BD4E6B7004E0C95 /* POOCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POOCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -95,20 +120,43 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2FBF0071C1F0BAC005CEACA /* SafariServices.framework in Frameworks */,
 				D2A8CBCE1BC7A9B1006BF1F6 /* FBSDKCoreKit.framework in Frameworks */,
 				D2A8CBCB1BC7A9B1006BF1F6 /* Bolts.framework in Frameworks */,
 				D2A8CBCF1BC7A9B1006BF1F6 /* FBSDKLoginKit.framework in Frameworks */,
 				D2A8CBC31BC7A979006BF1F6 /* Foundation.framework in Frameworks */,
 				D2A8CBC01BC7A94B006BF1F6 /* CoreGraphics.framework in Frameworks */,
+				5791B2D5C26160ED45146CA2 /* Pods_OutputFaceBookData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57AB0CB99FB116F2D773AD4D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				00DD6C2D9FF0CDE3ACDEE050 /* Pods-OutputFaceBookData.debug.xcconfig */,
+				0954B568C54480590B5A8386 /* Pods-OutputFaceBookData.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D20749531C22E82000A6EB2A /* VK Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D20749501C206AEC00A6EB2A /* POORegistrationViewController.h */,
+				D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */,
+				D20749541C22E96900A6EB2A /* VKEnterViewController.h */,
+				D20749551C22E96900A6EB2A /* VKEnterViewController.m */,
+			);
+			name = "VK Controllers";
+			sourceTree = "<group>";
+		};
 		D225FB821BDA360100711C53 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D20749531C22E82000A6EB2A /* VK Controllers */,
 				D2FE07D31BD52BA2004E0C95 /* POOFriendPhotoViewController.h */,
 				D2FE07D41BD52BA2004E0C95 /* POOFriendPhotoViewController.m */,
 				D2A8CBDC1BC7CD9A006BF1F6 /* POFriendsListViewController.h */,
@@ -151,9 +199,11 @@
 		D2A8CB971BC7A62C006BF1F6 = {
 			isa = PBXGroup;
 			children = (
+				D2DA3A421C1C79620043AD5A /* images */,
 				D2A8CBD21BC7AA67006BF1F6 /* Frameworks */,
 				D2A8CBA21BC7A62C006BF1F6 /* OutputFaceBookData */,
 				D2A8CBA11BC7A62C006BF1F6 /* Products */,
+				57AB0CB99FB116F2D773AD4D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -182,8 +232,6 @@
 				D2A8CBB11BC7A62C006BF1F6 /* LaunchScreen.storyboard */,
 				D2A8CBB41BC7A62C006BF1F6 /* Info.plist */,
 				D2A8CBA31BC7A62C006BF1F6 /* Supporting Files */,
-				D2E981341BC8286F00A798E3 /* POOModel.h */,
-				D2E981351BC8286F00A798E3 /* POOModel.m */,
 				D225FB831BDA398900711C53 /* POOCache.h */,
 				D225FB841BDA398900711C53 /* POOCache.m */,
 				D25412D81BF20CC7000BD9D3 /* POOCollectionViewLayout.h */,
@@ -203,19 +251,37 @@
 		D2A8CBD21BC7AA67006BF1F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D20749471C20365E00A6EB2A /* VK_ios_sdk.framework */,
+				D2FBF0061C1F0BAC005CEACA /* SafariServices.framework */,
 				D24BAC301BE7A641003C96A9 /* SystemConfiguration.framework */,
 				D24BAC2E1BE7A5F2003C96A9 /* Security.framework */,
 				D2A8CBC41BC7A9B1006BF1F6 /* Bolts.framework */,
-				D2A8CBC51BC7A9B1006BF1F6 /* FacebookSDKStrings.bundle */,
 				D2A8CBC61BC7A9B1006BF1F6 /* FBAudienceNetwork.framework */,
 				D2A8CBC71BC7A9B1006BF1F6 /* FBSDKCoreKit.framework */,
 				D2A8CBC81BC7A9B1006BF1F6 /* FBSDKLoginKit.framework */,
 				D2A8CBC91BC7A9B1006BF1F6 /* FBSDKMessengerShareKit.framework */,
 				D2A8CBCA1BC7A9B1006BF1F6 /* FBSDKShareKit.framework */,
+				D26773761C1F1E8B00CDB8D5 /* libVKSdk.a */,
 				D2A8CBBF1BC7A94B006BF1F6 /* CoreGraphics.framework */,
 				D2A8CBBD1BC7A93F006BF1F6 /* Foundation.framework */,
+				43E040808CE55AAAB5B51A2F /* Pods_OutputFaceBookData.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2DA3A421C1C79620043AD5A /* images */ = {
+			isa = PBXGroup;
+			children = (
+				D20749591C22F28E00A6EB2A /* SendButton@2x.png */,
+				D207495B1C22F29E00A6EB2A /* SendButton_pressed@2x.png */,
+				D20749571C22ED1300A6EB2A /* WhiteArrow@2x.png */,
+				D2310F8C1C1EF0F6000B68D9 /* RegButton@2x.png */,
+				D2310F881C1C9161000B68D9 /* Background@2x.png */,
+				D20749641C24230E00A6EB2A /* Header_black@2x.png */,
+				D2DA3A451C1C820C0043AD5A /* Header@2x.png */,
+				D2DA3A431C1C79810043AD5A /* LoginButton@2x.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,9 +291,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D2A8CBB71BC7A62C006BF1F6 /* Build configuration list for PBXNativeTarget "OutputFaceBookData" */;
 			buildPhases = (
+				609E5837B22474F20BB0126C /* Check Pods Manifest.lock */,
 				D2A8CB9C1BC7A62C006BF1F6 /* Sources */,
 				D2A8CB9D1BC7A62C006BF1F6 /* Frameworks */,
 				D2A8CB9E1BC7A62C006BF1F6 /* Resources */,
+				6B5D800FA69B1B54AF9043DF /* Embed Pods Frameworks */,
+				16D27A9E16054CBF525AF73A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -276,17 +345,72 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D207495A1C22F28E00A6EB2A /* SendButton@2x.png in Resources */,
+				D2DA3A441C1C79810043AD5A /* LoginButton@2x.png in Resources */,
 				D2A8CBB31BC7A62C006BF1F6 /* LaunchScreen.storyboard in Resources */,
 				D292873C1BCBFCDE0089E3BE /* POOTableViewCell.xib in Resources */,
+				D2310F891C1C9161000B68D9 /* Background@2x.png in Resources */,
+				D20749651C24230E00A6EB2A /* Header_black@2x.png in Resources */,
+				D20749581C22ED1300A6EB2A /* WhiteArrow@2x.png in Resources */,
+				D2DA3A461C1C820C0043AD5A /* Header@2x.png in Resources */,
 				D2A8CBB01BC7A62C006BF1F6 /* Assets.xcassets in Resources */,
+				D207495C1C22F29E00A6EB2A /* SendButton_pressed@2x.png in Resources */,
 				D2FE07CC1BD4E6B7004E0C95 /* POOCollectionViewCell.xib in Resources */,
+				D2310F8D1C1EF0F6000B68D9 /* RegButton@2x.png in Resources */,
 				D2A8CBAE1BC7A62C006BF1F6 /* Main.storyboard in Resources */,
 				D24BAD311BE7B7E0003C96A9 /* POOFeedTableViewCell.xib in Resources */,
-				D2A8CBCC1BC7A9B1006BF1F6 /* FacebookSDKStrings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16D27A9E16054CBF525AF73A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OutputFaceBookData/Pods-OutputFaceBookData-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		609E5837B22474F20BB0126C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6B5D800FA69B1B54AF9043DF /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OutputFaceBookData/Pods-OutputFaceBookData-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D2A8CB9C1BC7A62C006BF1F6 /* Sources */ = {
@@ -295,12 +419,13 @@
 			files = (
 				D292873B1BCBFCDE0089E3BE /* POOTableViewCell.m in Sources */,
 				D2A8CBD51BC7B874006BF1F6 /* POOTESTFriend.m in Sources */,
+				D20749521C206AEC00A6EB2A /* POORegistrationViewController.m in Sources */,
 				D24BAD301BE7B7E0003C96A9 /* POOFeedTableViewCell.m in Sources */,
 				D2A8CBDF1BC7CD9A006BF1F6 /* POFriendsListViewController.m in Sources */,
-				D2E981361BC8286F00A798E3 /* POOModel.m in Sources */,
 				D2A8CBA81BC7A62C006BF1F6 /* AppDelegate.m in Sources */,
 				D225FB851BDA398900711C53 /* POOCache.m in Sources */,
 				D25412DA1BF20CC7000BD9D3 /* POOCollectionViewLayout.m in Sources */,
+				D20749561C22E96900A6EB2A /* VKEnterViewController.m in Sources */,
 				D2FE07D51BD52BA2004E0C95 /* POOFriendPhotoViewController.m in Sources */,
 				D2A8CBA51BC7A62C006BF1F6 /* main.m in Sources */,
 				D2A8CBBC1BC7A684006BF1F6 /* POOFacebookData.m in Sources */,
@@ -416,17 +541,20 @@
 		};
 		D2A8CBB81BC7A62C006BF1F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 00DD6C2D9FF0CDE3ACDEE050 /* Pods-OutputFaceBookData.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/OutputFaceBookData",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = OutputFaceBookData/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
+					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = PO.OutputFaceBookData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -435,17 +563,20 @@
 		};
 		D2A8CBB91BC7A62C006BF1F6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0954B568C54480590B5A8386 /* Pods-OutputFaceBookData.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/OutputFaceBookData",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = OutputFaceBookData/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
+					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = PO.OutputFaceBookData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
