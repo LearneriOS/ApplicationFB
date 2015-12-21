@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5791B2D5C26160ED45146CA2 /* Pods_OutputFaceBookData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040808CE55AAAB5B51A2F /* Pods_OutputFaceBookData.framework */; };
 		D20749521C206AEC00A6EB2A /* POORegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */; };
-		D20749561C22E96900A6EB2A /* VKEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D20749551C22E96900A6EB2A /* VKEnterViewController.m */; };
 		D20749581C22ED1300A6EB2A /* WhiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D20749571C22ED1300A6EB2A /* WhiteArrow@2x.png */; };
 		D207495A1C22F28E00A6EB2A /* SendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D20749591C22F28E00A6EB2A /* SendButton@2x.png */; };
 		D207495C1C22F29E00A6EB2A /* SendButton_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D207495B1C22F29E00A6EB2A /* SendButton_pressed@2x.png */; };
@@ -54,8 +53,6 @@
 		D20749471C20365E00A6EB2A /* VK_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VK_ios_sdk.framework; path = "Pods/../build/Debug-iphoneos/VK_ios_sdk.framework"; sourceTree = "<group>"; };
 		D20749501C206AEC00A6EB2A /* POORegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POORegistrationViewController.h; sourceTree = "<group>"; };
 		D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POORegistrationViewController.m; sourceTree = "<group>"; };
-		D20749541C22E96900A6EB2A /* VKEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKEnterViewController.h; sourceTree = "<group>"; };
-		D20749551C22E96900A6EB2A /* VKEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKEnterViewController.m; sourceTree = "<group>"; };
 		D20749571C22ED1300A6EB2A /* WhiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WhiteArrow@2x.png"; path = "../Downloads/Messenger_Retina/WhiteArrow@2x.png"; sourceTree = "<group>"; };
 		D20749591C22F28E00A6EB2A /* SendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SendButton@2x.png"; path = "../Downloads/Messenger_Retina/SendButton@2x.png"; sourceTree = "<group>"; };
 		D207495B1C22F29E00A6EB2A /* SendButton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SendButton_pressed@2x.png"; path = "../Downloads/Messenger_Retina/SendButton_pressed@2x.png"; sourceTree = "<group>"; };
@@ -147,8 +144,6 @@
 			children = (
 				D20749501C206AEC00A6EB2A /* POORegistrationViewController.h */,
 				D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */,
-				D20749541C22E96900A6EB2A /* VKEnterViewController.h */,
-				D20749551C22E96900A6EB2A /* VKEnterViewController.m */,
 			);
 			name = "VK Controllers";
 			sourceTree = "<group>";
@@ -157,16 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				D20749531C22E82000A6EB2A /* VK Controllers */,
-				D2FE07D31BD52BA2004E0C95 /* POOFriendPhotoViewController.h */,
-				D2FE07D41BD52BA2004E0C95 /* POOFriendPhotoViewController.m */,
-				D2A8CBDC1BC7CD9A006BF1F6 /* POFriendsListViewController.h */,
-				D2A8CBDD1BC7CD9A006BF1F6 /* POFriendsListViewController.m */,
-				D2A8CBBA1BC7A684006BF1F6 /* POOFacebookData.h */,
-				D2A8CBBB1BC7A684006BF1F6 /* POOFacebookData.m */,
-				D2C43ABB1BE3AE7000E0C170 /* POOWebController.h */,
-				D2C43ABC1BE3AE7000E0C170 /* POOWebController.m */,
-				D24BAD321BE7C0E4003C96A9 /* POOFeedViewController.h */,
-				D24BAD331BE7C0E4003C96A9 /* POOFeedViewController.m */,
+				D2916A1B1C28097700D6B3E7 /* Facebook controllers */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -194,6 +180,23 @@
 				D2FE07CA1BD4E6B7004E0C95 /* POOCollectionViewCell.xib */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		D2916A1B1C28097700D6B3E7 /* Facebook controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D2FE07D31BD52BA2004E0C95 /* POOFriendPhotoViewController.h */,
+				D2FE07D41BD52BA2004E0C95 /* POOFriendPhotoViewController.m */,
+				D2A8CBDC1BC7CD9A006BF1F6 /* POFriendsListViewController.h */,
+				D2A8CBDD1BC7CD9A006BF1F6 /* POFriendsListViewController.m */,
+				D2A8CBBA1BC7A684006BF1F6 /* POOFacebookData.h */,
+				D2A8CBBB1BC7A684006BF1F6 /* POOFacebookData.m */,
+				D2C43ABB1BE3AE7000E0C170 /* POOWebController.h */,
+				D2C43ABC1BE3AE7000E0C170 /* POOWebController.m */,
+				D24BAD321BE7C0E4003C96A9 /* POOFeedViewController.h */,
+				D24BAD331BE7C0E4003C96A9 /* POOFeedViewController.m */,
+			);
+			name = "Facebook controllers";
 			sourceTree = "<group>";
 		};
 		D2A8CB971BC7A62C006BF1F6 = {
@@ -425,7 +428,6 @@
 				D2A8CBA81BC7A62C006BF1F6 /* AppDelegate.m in Sources */,
 				D225FB851BDA398900711C53 /* POOCache.m in Sources */,
 				D25412DA1BF20CC7000BD9D3 /* POOCollectionViewLayout.m in Sources */,
-				D20749561C22E96900A6EB2A /* VKEnterViewController.m in Sources */,
 				D2FE07D51BD52BA2004E0C95 /* POOFriendPhotoViewController.m in Sources */,
 				D2A8CBA51BC7A62C006BF1F6 /* main.m in Sources */,
 				D2A8CBBC1BC7A684006BF1F6 /* POOFacebookData.m in Sources */,

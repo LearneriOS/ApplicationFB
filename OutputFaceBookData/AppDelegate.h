@@ -27,7 +27,6 @@
 @property (nonatomic, strong) POOFriendPhotoViewController *friendPhotoViewController;
 @property (nonatomic, strong) POOWebController *webViewController;
 @property (nonatomic, strong) POOFeedViewController *feedViewController;
-@property (nonatomic, strong) POORegistrationViewController *registrationViewController;
 
 @end
 

@@ -36,9 +36,6 @@
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = @[friendListNavigationConrloller,friedPhotoNavigationController,feedNavigattionController];
     
-    self.registrationViewController = [[POORegistrationViewController alloc] init];
-    UINavigationController *registrationNavigationController = [[UINavigationController alloc] initWithRootViewController:self.registrationViewController];
-    
     POOFacebookData *facebookDateViewController = [[POOFacebookData alloc] init];
 
     self.window.backgroundColor = [UIColor whiteColor];

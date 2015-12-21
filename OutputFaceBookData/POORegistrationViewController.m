@@ -16,6 +16,7 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
 
 @interface POORegistrationViewController ()
 
+
 @property (nonatomic, strong) UITextField *firstName;
 @property (nonatomic, strong) UITextField *lastName;
 @property (nonatomic, strong) UITextField *phone;
@@ -33,71 +34,58 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed: @"Background@2x.png"]]];
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"Header_black@2x.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0) resizingMode:UIImageResizingModeStretch] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.topItem.title = @"Регистрация";
     
 }
-
-- (void) checkPhone:(void (^)(NSString *response, NSError *error))completionHandler {
-    NSString *checkPhone = [NSString stringWithFormat: @"https://api.vk.com/method/auth.checkPhone?phone=%@&client_id=%@&client_secret=%@",self.phone.text, APP_ID, SECRET];
-    NSURL *chekPhoneURL = [NSURL URLWithString:checkPhone];
-    NSURLRequest *checkPhoneRequest = [NSURLRequest requestWithURL:chekPhoneURL];
-    
-    NSURLSessionDataTask *checkPhoneDataTask = [[NSURLSession sharedSession] dataTaskWithRequest:checkPhoneRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (completionHandler) {
-            if (error) {
-                completionHandler(nil,error);
-            } else {
-                NSError *jsonError;
-                NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-                if(jsonError) {
-                    NSLog(@"json error : %@", [jsonError localizedDescription]);
-                } else {
-                    NSLog(@"%@",jsonDictionary);
-                }
-                completionHandler([jsonDictionary objectForKey:@"response"], jsonError);
-            }
-        }
-
-    }];
-    
-    [checkPhoneDataTask resume];
-}
-
+#pragma mark button clicked
 - (void) vkRegistration {
+    NSString *checkPhoneRequest = [NSString stringWithFormat: @"https://api.vk.com/method/auth.checkPhone?phone=%@&client_id=%@&client_secret=%@",self.phone.text, APP_ID, SECRET];
     
-[self checkPhone:^(NSString *response, NSError *error) {
-    
-    if ([response integerValue] == 1) {
-        NSString *authorizationRequest = [NSString stringWithFormat:@"https://api.vk.com/method/auth.signup?first_name=%@&last_name=%@&client_id=%@&client_secret=%@&phone=%@&password=%@&test_mode=1",self.firstName.text, self.lastName.text, APP_ID, SECRET, self.phone.text, self.password.text];
-        [self doRequstByString:authorizationRequest];
-        [self creatConfirmWindow];
-    } else if([response integerValue] == 1000) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.phone.text = nil;
-            UIColor *color = [UIColor redColor];
-            self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Неверный номер" attributes:@{NSForegroundColorAttributeName: color}];
-        });
-    } else if([response integerValue] == 1004) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.phone.text = nil;
-            UIColor *color = [UIColor redColor];
-            self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Номер телефона занят другим пользователем." attributes:@{NSForegroundColorAttributeName: color}];
-        });
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.phone.text = nil;
-            UIColor *color = [UIColor redColor];
-            self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Не все поля были заполнены" attributes:@{NSForegroundColorAttributeName: color}];
-        });
-    }
-}];
+    [self doRequestByStringWithBlock:checkPhoneRequest block:^(NSString *response, NSError *error) {
+        
+        if ([response integerValue] == 1 && ![self.firstName.text  isEqual: @""] && ![self.lastName.text  isEqual: @""] && ![self.password.text  isEqual: @""]) {
+            NSString *authorizationRequest = [NSString stringWithFormat:@"https://api.vk.com/method/auth.signup?first_name=%@&last_name=%@&client_id=%@&client_secret=%@&phone=%@&password=%@&test_mode=1",self.firstName.text, self.lastName.text, APP_ID, SECRET, self.phone.text, self.password.text];
+            [self doRequestByString:authorizationRequest];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self creatConfirmWindow];
+            });
+        } else if([response integerValue] == 1000) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.phone.text = nil;
+                UIColor *color = [UIColor redColor];
+                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Неверный номер" attributes:@{NSForegroundColorAttributeName: color}];
+            });
+        } else if([response integerValue] == 1004) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.phone.text = nil;
+                UIColor *color = [UIColor redColor];
+                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Номер телефона занят другим пользователем." attributes:@{NSForegroundColorAttributeName: color}];
+            });
+        } else if ([response integerValue] == 100) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.phone.text = nil;
+                UIColor *color = [UIColor redColor];
+                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Неверно введен номер" attributes:@{NSForegroundColorAttributeName: color}];
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.phone.text = nil;
+                UIColor *color = [UIColor redColor];
+                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Не все поля были заполнены" attributes:@{NSForegroundColorAttributeName: color}];
+            });
+        }
+    }];
 }
 
+#pragma mark AlertViews. End registration
 - (void) creatConfirmWindow {
     UIAlertController *passwordConfirmation = [UIAlertController alertControllerWithTitle:@"Введите Пароль" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    
+
     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         NSString *confirmationRegistration = [NSString stringWithFormat:@"https://api.vk.com/method/auth.confirm?client_id=%@&client_secret=%@&phone=%@&code=%@&test_mode=1",APP_ID, SECRET, self.phone.text, self.confimPassword.text];
-        [self doRequstByString:confirmationRegistration];
+        [self doRequestByStringWithBlock:confirmationRegistration block:^(NSString *response, NSError *error) {
+            [self buildAllertControllerWithFlag:[response integerValue]];
+        }];
     }];
     
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
@@ -114,7 +102,28 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     [self presentViewController:passwordConfirmation animated:YES completion:nil];
 }
 
-- (void) doRequstByString:(NSString *) stringRequest {
+- (void) buildAllertControllerWithFlag:(NSInteger) flag {
+    UIAlertController *alertController = nil;
+    UIAlertAction *ok = nil;
+    if (flag == 1) {
+        alertController = [UIAlertController alertControllerWithTitle:@"Регистрация прошла успешно" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+    } else {
+        alertController = [UIAlertController alertControllerWithTitle:@"Неправильны пароль" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self creatConfirmWindow];
+        }];
+    }
+    [alertController addAction:ok];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:alertController animated:YES completion:nil];
+    });
+}
+
+#pragma mark - Requests
+- (void) doRequestByString:(NSString *) stringRequest {
     NSURL *url = [NSURL URLWithString:stringRequest];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
@@ -131,6 +140,32 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     [dataTask resume];
 }
 
+- (void) doRequestByStringWithBlock:(NSString *)stringRequest block:(void (^)(NSString *response, NSError *error))completionHandler {
+    NSURL *chekPhoneURL = [NSURL URLWithString:stringRequest];
+    NSURLRequest *checkPhoneRequest = [NSURLRequest requestWithURL:chekPhoneURL];
+    
+    NSURLSessionDataTask *checkPhoneDataTask = [[NSURLSession sharedSession] dataTaskWithRequest:checkPhoneRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (completionHandler) {
+            if (error) {
+                completionHandler(nil,error);
+            } else {
+                NSError *jsonError;
+                NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                if(jsonError) {
+                    NSLog(@"json error : %@", [jsonError localizedDescription]);
+                } else if([jsonDictionary objectForKey:@"response"]) {
+                    completionHandler([jsonDictionary objectForKey:@"response"], jsonError);
+                } else {
+                    completionHandler([[jsonDictionary objectForKey:@"error"] objectForKey:@"error_code"], jsonError);
+                }
+                NSLog(@"%@",jsonDictionary);
+            }
+        }
+    }];
+    
+    [checkPhoneDataTask resume];
+}
+#pragma mark - Build subView
 - (void) creatSubView {
     self.firstName = [[UITextField alloc] init];
     [self.firstName setBorderStyle:UITextBorderStyleRoundedRect];
@@ -170,7 +205,7 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     [self.view addSubview:registrationButton];
     [self creatConstrainsToSubView:registrationButton];
 }
-
+#pragma mark - Creat constrains to subView
 - (void) creatConstrainsToSubView:(UIButton *)registrationButton {
     if (self.view.constraints.count == 0) {
         
@@ -212,13 +247,4 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 @end
