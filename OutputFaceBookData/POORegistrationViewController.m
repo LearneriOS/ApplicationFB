@@ -7,6 +7,7 @@
 //
 
 #import "POORegistrationViewController.h"
+#import <CoreData/CoreData.h>
 
 static NSString *APP_ID = @"5187957";
 static NSString *SECRET = @"sBsolEPAesngv7KAXDv7";
@@ -15,7 +16,6 @@ static NSInteger INDENT = 20;
 typedef void (^CompletionHandler)(NSString *response, NSError *error);
 
 @interface POORegistrationViewController ()
-
 
 @property (nonatomic, strong) UITextField *firstName;
 @property (nonatomic, strong) UITextField *lastName;
@@ -246,5 +246,6 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

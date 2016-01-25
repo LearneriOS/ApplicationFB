@@ -72,7 +72,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     POOTESTFriend *friend = [self.friends objectAtIndex:indexPath.row];
-    return [POOTableViewCell heightWithPOOFriendText:friend andMaxWidth:CGRectGetWidth(self.tableView.bounds)];
+    return [POOTableViewCell heightWithPOOFriendText:friend.name subTitle:friend.thumpnailUrl andMaxWidth:CGRectGetWidth(_tableView.bounds)];
 }
 
 @end

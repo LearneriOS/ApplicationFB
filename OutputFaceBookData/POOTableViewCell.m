@@ -19,6 +19,28 @@
 
 @end
 
+@implementation POOTableViewCell (NewInitMethod)
+
+- (void)configureWithName:(NSString *)name  SecondName:(NSString *) secondName online:(NSInteger) online image:(NSString *) image {
+    self.titleLabel.text = [NSString stringWithFormat:@"%@ %@",name, secondName];
+    if (online == 1) {
+        self.subtitleLabel.text = @"online";
+    } else {
+        self.subtitleLabel.text = @"";
+    }
+    
+    [self loadImageFromURL:image];
+}
+
+- (void)configureWithName:(NSString *)name  SecondName:(NSString *) secondName {
+    self.titleLabel.text = name;
+    if (secondName.length > 0) {
+        self.subtitleLabel.text = [NSString stringWithFormat:@"%@ %@", name, secondName];
+    }
+}
+
+@end
+
 @implementation POOTableViewCell
 
 +(instancetype) cell {
@@ -35,7 +57,7 @@
     return NSStringFromClass([self class]);
 }
 
-+ (CGFloat)heightWithPOOFriendText:(POOTESTFriend *)text andMaxWidth:(CGFloat)maxWidth {
++ (CGFloat)heightWithPOOFriendText:(NSString *)title subTitle:(NSString *)subTitle andMaxWidth:(CGFloat)maxWidth {
     
     static UILabel *titleLabel = nil;
     static UILabel *subtitleLabel = nil;
@@ -45,8 +67,8 @@
         subtitleLabel = [[UILabel alloc] init];
     }
     
-    titleLabel.text = text.name;
-    subtitleLabel.text = text.thumpnailUrl;
+    titleLabel.text = title;
+    subtitleLabel.text = subTitle;
     
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.lineBreakMode = NSLineBreakByWordWrapping;
@@ -81,11 +103,11 @@
     [super awakeFromNib];
     
     self.layer.borderColor = [UIColor redColor].CGColor;
-    //self.layer.borderWidth = 3.f;
 }
 
 - (void)configureWithTitleLabel:(NSString *)titleString  andSubtitleLabel:(NSString *) SubTitleLabel {
     self.titleLabel.text = titleString;
+    NSLog(@"%@",_titleLabel.text);
     self.subtitleLabel.text = SubTitleLabel;
     
     [self loadImageFromURL:SubTitleLabel];
@@ -115,16 +137,13 @@
 
 - (void)updateConstraints {
     [super updateConstraints];
-    
-    POOTESTFriend *friend = [[POOTESTFriend alloc] init];
-    friend.name = self.titleLabel.text;
-    friend.thumpnailUrl = self.subtitleLabel.text;
-    
-    self.heightConstraintTitle.constant = [[self class] heightWithPOOFriendText:friend andMaxWidth:CGRectGetWidth(self.bounds)];
+    self.heightConstraintTitle.constant = [[self class] heightWithPOOFriendText:_titleLabel.text subTitle:_subtitleLabel.text andMaxWidth:CGRectGetWidth(self.bounds)];
     self.widthConstraintTitle.constant = CGRectGetWidth(self.bounds);
     
-    self.heightConstraint.constant = [[self class] heightWithPOOFriendText:friend andMaxWidth:CGRectGetWidth(self.bounds)];
+    self.heightConstraint.constant = [[self class] heightWithPOOFriendText:_titleLabel.text subTitle:_subtitleLabel.text andMaxWidth:CGRectGetWidth(self.bounds)];
     self.widthConstraint.constant = CGRectGetWidth(self.bounds);
+    
+    [self updateFocusIfNeeded];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

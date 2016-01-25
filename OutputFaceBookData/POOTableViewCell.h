@@ -13,9 +13,10 @@
 
 + (instancetype)cell;
 + (NSString *)identifier;
-+ (CGFloat)heightWithPOOFriendText:(POOTESTFriend *)text andMaxWidth:(CGFloat)maxWidth;
++ (CGFloat)heightWithPOOFriendText:(NSString *)title subTitle:(NSString *)subTitle andMaxWidth:(CGFloat)maxWidth;
 
 - (void)configureWithTitleLabel:(NSString *)titleString  andSubtitleLabel:(NSString *) SubTitleString;
+- (void) loadImageFromURL:(NSString *)URL;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *widthConstraint;
@@ -24,3 +25,13 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *LabelesConstrain;
 
 @end
+
+@interface POOTableViewCell (NewInitMethod)
+
+- (void)configureWithName:(NSString *)name  SecondName:(NSString *) secondName online:(NSInteger) online image:(NSString *) image;
+- (void)configureWithName:(NSString *)name  SecondName:(NSString *) secondName;
+
+@end
+
+
+

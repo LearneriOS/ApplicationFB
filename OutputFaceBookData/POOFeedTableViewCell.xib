@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,7 +15,6 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rao-Cn-1oW">
                         <rect key="frame" x="8" y="8" width="304" height="21"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="9xF-fZ-YAS"/>
                             <constraint firstAttribute="width" constant="304" id="aoZ-qB-XOu"/>
@@ -26,14 +25,12 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eti-6s-Wrj">
                         <rect key="frame" x="195" y="260" width="42" height="21"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" scrollEnabled="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vEA-Da-isu">
                         <rect key="frame" x="0.0" y="37" width="320" height="215"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="215" id="ETn-wn-UEF"/>
                             <constraint firstAttribute="width" constant="320" id="tBu-dM-oyl"/>
@@ -47,7 +44,6 @@
                     </collectionView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eE8-DP-YaC">
                         <rect key="frame" x="0.0" y="37" width="320" height="215"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="215" id="Z39-i9-g11"/>
                         </constraints>
@@ -58,14 +54,12 @@
                         </variation>
                     </imageView>
                 </subviews>
-                <animations/>
                 <variation key="default">
                     <mask key="subviews">
                         <exclude reference="eE8-DP-YaC"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="collectionHeightConstrain" destination="ETn-wn-UEF" id="gL5-3r-7Dl"/>
                 <outlet property="collectionView" destination="vEA-Da-isu" id="JMT-J6-XcU"/>
