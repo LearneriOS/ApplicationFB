@@ -18,8 +18,9 @@ typedef void (^CompletionHandler)(NSDictionary *response, NSError *error);
 
 static const NSString *USERID;
 
-@interface POOLogInVKViewController () < UITableViewDelegate, UITableViewDataSource>
+@interface POOLogInVKViewController () < UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchBarDelegate>
 
+@property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) UISegmentedControl *segmentController;
 @property (nonatomic, strong) NSMutableArray *friends;
 @property (nonatomic, strong) NSMutableArray *groupOfContact;
@@ -27,6 +28,7 @@ static const NSString *USERID;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *namesBySection;
 @property (nonatomic, strong) NSArray *sectionSource;
+@property (nonatomic, strong) NSArray *searchResults;
 
 @end
 
@@ -56,7 +58,7 @@ static const NSString *USERID;
     _sectionSource = [self getSortedArrayBySection:_phoneContact];
 }
 
-- (void) setBookContact {
+- (void)setBookContact {
     for (CNContact *contact in _groupOfContact) {
         POOPhoneBookContact *phoneContact = [[POOPhoneBookContact alloc] initWithContact:contact];
         [_phoneContact addObject:phoneContact];
@@ -85,6 +87,7 @@ static const NSString *USERID;
             
             [nameInSection addObject:contact];
             [_namesBySection setObject:nameInSection forKey:sectionName];
+            NSLog(@"%@", _namesBySection);
         } else {
             POOVKUserModel *user = (POOVKUserModel *)object;
             NSString *sectionName = [user.name substringToIndex:1];
@@ -119,7 +122,7 @@ static const NSString *USERID;
     }];
 }
 
-- (void) doRequestByStringWithBlock:(NSString *)stringRequest block:(void (^)(NSDictionary *response, NSError *error))completionHandler {
+- (void)doRequestByStringWithBlock:(NSString *)stringRequest block:(void (^)(NSDictionary *response, NSError *error))completionHandler {
     NSURL *chekPhoneURL = [NSURL URLWithString:stringRequest];
     NSURLRequest *checkPhoneRequest = [NSURLRequest requestWithURL:chekPhoneURL];
     
@@ -144,7 +147,7 @@ static const NSString *USERID;
     [checkPhoneDataTask resume];
 }
 
-- (void) getAllContacts {
+- (void)getAllContacts {
     if ([CNContactStore class]) {
         CNContactStore *addresBook = [[CNContactStore alloc] init];
         
@@ -251,18 +254,22 @@ static const NSString *USERID;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
-    UISearchBar *searchBar = [[UISearchBar alloc] init];
-    [self.view addSubview:_tableView];
-    [self.view addSubview:searchBar];
-    searchBar.translatesAutoresizingMaskIntoConstraints = NO;
-    _tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    //searchBar
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    _searchController.searchResultsUpdater = self;
+    _searchController.dimsBackgroundDuringPresentation = NO;
+    _searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
+                                                      NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:searchBar attribute:NSLayoutAttributeLeading multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:searchBar attribute:NSLayoutAttributeTrailing multiplier:1 constant:0]];
-    //tableVie
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:searchBar attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+    _searchController.searchBar.delegate = self;
+    
+    _tableView.tableHeaderView = _searchController.searchBar;
+    self.definesPresentationContext = YES;
+    
+    [self.view addSubview:_tableView];
+
+    _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_tableView attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
     

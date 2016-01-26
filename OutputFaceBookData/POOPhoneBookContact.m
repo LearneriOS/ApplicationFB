@@ -16,11 +16,10 @@
     _secondName = contact.familyName;
     _emails = contact.emailAddresses;
     for (CNLabeledValue *lableValue in contact.phoneNumbers) {
-        NSString *type = [[lableValue.label substringFromIndex:3] substringToIndex:lableValue.label.length - 6];
+        NSString *type = [[lableValue.label substringFromIndex:4] substringToIndex:lableValue.label.length - 8];
         CNPhoneNumber *phoneNumber = lableValue.value;
         
         [_phones setObject:phoneNumber.stringValue forKey:type];
-        NSLog(@"%@", _phones);
     }
     
     return self;

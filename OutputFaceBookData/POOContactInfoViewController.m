@@ -6,11 +6,13 @@
 //  Copyright © 2016 Oleh Petrunko. All rights reserved.
 //
 
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMessageComposeViewController.h>
 #import "POOContactInfoViewController.h"
 
 static NSInteger INDENT = 20;
 
-@interface POOContactInfoViewController ()
+@interface POOContactInfoViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *lastName;
@@ -35,9 +37,42 @@ static NSInteger INDENT = 20;
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"Header_black@2x.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0) resizingMode:UIImageResizingModeStretch] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
     
     [self creatUI];
-    
 }
 
+#pragma mark - TableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return _phones.allKeys.count;
+}
+
+- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [_phones.allKeys objectAtIndex:section];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSString *curentKey = [_phones.allKeys objectAtIndex:section];
+    NSArray *numberOfRowsInSectionArray = [NSArray arrayWithObject:[_phones objectForKey:curentKey]];
+    
+    return numberOfRowsInSectionArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *MyIdentifier = @"MyIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:MyIdentifier];
+    }
+    
+    NSString *curentKey = [_phones.allKeys objectAtIndex:indexPath.section];
+    cell.textLabel.text = [_phones objectForKey:curentKey];
+    
+    return cell;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma - UI
 - (void)creatUI {
     UIImageView *imageView = [[UIImageView alloc] init];
     [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
@@ -48,32 +83,37 @@ static NSInteger INDENT = 20;
     UIButton *sendMessage = [UIButton buttonWithType:UIButtonTypeSystem];
     [sendMessage setTitle:@"Отправить сообщение" forState:UIControlStateNormal];
     [sendMessage setBackgroundColor:[UIColor whiteColor]];
+    [sendMessage addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchDown];
     
-    UIButton *phoneNumberButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [phoneNumberButton setBackgroundColor:[UIColor whiteColor]];
-    
-    if ([_phones objectForKey:@"<Mobile>"]) {
-        [phoneNumberButton setTitle:[NSString stringWithFormat:@"Mobile: %@", [_phones objectForKey:@"<Mobile>"]] forState:UIControlStateNormal];
-    } else if ([_phones objectForKey:@"<Work>"]) {
-        [phoneNumberButton setTitle:[NSString stringWithFormat:@"Work: %@", [_phones objectForKey:@"<Work>"]] forState:UIControlStateNormal];
-    } else {
-        [phoneNumberButton setTitle:[NSString stringWithFormat:@"Other: %@", [_phones objectForKey:@"<Other>"]] forState:UIControlStateNormal];
-    }
+    UITableView *tableView = [[UITableView alloc] init];
+    tableView.delegate = self;
+    tableView.dataSource = self;
     
     [self.view addSubview:imageView];
     [self.view addSubview:nameLable];
     [self.view addSubview:sendMessage];
-    [self.view addSubview:phoneNumberButton];
+    [self.view addSubview:tableView];
     
-    [self creatConstraints:imageView nameLable:nameLable sendMessegeButton:sendMessage phoneNumberButton:phoneNumberButton];
+    [self creatConstraints:imageView nameLable:nameLable sendMessegeButton:sendMessage tableView:tableView];
 }
 
-- (void)creatConstraints:(UIImageView *)imageView nameLable:(UILabel *)nameLable sendMessegeButton:(UIButton *)sendMessegeButton phoneNumberButton:(UIButton *)phoneNumberButton {
+- (void) sendMessage {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Заглушка" message:@"Реализовать отправку сообщений" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    [alertController addAction:ok];
+    
+    [self presentViewController:alertController animated:NO completion:NULL];
+}
+
+#pragma mark - Constrains
+- (void)creatConstraints:(UIImageView *)imageView nameLable:(UILabel *)nameLable sendMessegeButton:(UIButton *)sendMessegeButton tableView:(UITableView *)tableView {
     if (self.view.constraints.count == 0) {
         imageView.translatesAutoresizingMaskIntoConstraints = NO;
         nameLable.translatesAutoresizingMaskIntoConstraints = NO;
         sendMessegeButton.translatesAutoresizingMaskIntoConstraints = NO;
-        phoneNumberButton.translatesAutoresizingMaskIntoConstraints = NO;
+        tableView.translatesAutoresizingMaskIntoConstraints = NO;
         // imageView Constraint
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:INDENT]];
         
@@ -87,11 +127,12 @@ static NSInteger INDENT = 20;
         
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:sendMessegeButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:INDENT]];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:sendMessegeButton attribute:NSLayoutAttributeTrailing multiplier:1 constant:INDENT]];
-        // phoneNumberButton Constraint
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneNumberButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:sendMessegeButton attribute:NSLayoutAttributeBottom multiplier:1 constant:INDENT]];
+        // tableView Contstarins
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:sendMessegeButton attribute:NSLayoutAttributeBottom multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:tableView attribute:NSLayoutAttributeBottom multiplier:1 constant:INDENT]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneNumberButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:phoneNumberButton attribute:NSLayoutAttributeTrailing multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:tableView attribute:NSLayoutAttributeTrailing multiplier:1 constant:INDENT]];
     }
 }
 

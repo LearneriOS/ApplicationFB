@@ -2,5 +2,6 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'OutputFaceBookData' do
-pod "VK-ios-sdk" 
+pod "VK-ios-sdk"
+pdd ""
 end
