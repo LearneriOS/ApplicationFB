@@ -75,7 +75,7 @@ static NSInteger INDENT = 20;
 #pragma - UI
 - (void)creatUI {
     UIImageView *imageView = [[UIImageView alloc] init];
-    [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
+    [imageView setImage:[UIImage imageNamed:@"placeholder.jpg"]];
     
     UILabel *nameLable = [[UILabel alloc] init];
     [nameLable setText:[NSString stringWithFormat:@"%@ %@",_name, _lastName]];

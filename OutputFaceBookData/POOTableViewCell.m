@@ -48,12 +48,10 @@
 }
 
 + (UINib *)cellNib {
-    
     return [UINib nibWithNibName:[[self class] identifier] bundle:nil];
 }
 
 + (NSString *)identifier {
-    
     return NSStringFromClass([self class]);
 }
 
@@ -137,6 +135,7 @@
 
 - (void)updateConstraints {
     [super updateConstraints];
+    
     self.heightConstraintTitle.constant = [[self class] heightWithPOOFriendText:_titleLabel.text subTitle:_subtitleLabel.text andMaxWidth:CGRectGetWidth(self.bounds)];
     self.widthConstraintTitle.constant = CGRectGetWidth(self.bounds);
     
@@ -144,6 +143,111 @@
     self.widthConstraint.constant = CGRectGetWidth(self.bounds);
     
     [self updateFocusIfNeeded];
+//    if (self.constraints.count == 0) {
+//        _photo.translatesAutoresizingMaskIntoConstraints = NO;
+//        _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//        _subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//        // photo Constrains
+//        NSLayoutConstraint *photoTopConstraint = [NSLayoutConstraint
+//                                                  constraintWithItem:_photo
+//                                                  attribute:NSLayoutAttributeTop
+//                                                  relatedBy:NSLayoutRelationEqual
+//                                                  toItem:self attribute:NSLayoutAttributeTop
+//                                                  multiplier:1 constant:0];
+//        NSLayoutConstraint *photoLeadingConstraint = [NSLayoutConstraint
+//                                                      constraintWithItem:_photo
+//                                                      attribute:NSLayoutAttributeTrailing
+//                                                      relatedBy:NSLayoutRelationEqual
+//                                                      toItem:self
+//                                                      attribute:NSLayoutAttributeLeading
+//                                                      multiplier:1 constant:0];
+//        
+//        NSLayoutConstraint *photoBottomConstraint = [NSLayoutConstraint
+//                                                     constraintWithItem:self
+//                                                     attribute:NSLayoutAttributeBottom
+//                                                     relatedBy:NSLayoutRelationEqual
+//                                                     toItem:_photo
+//                                                     attribute:NSLayoutAttributeBottom
+//                                                     multiplier:1 constant:0];
+//        // titleLable Constrains
+//        NSLayoutConstraint *titleLableTopConstraint = [NSLayoutConstraint
+//                                                       constraintWithItem:self
+//                                                       attribute:NSLayoutAttributeTop
+//                                                       relatedBy:NSLayoutRelationEqual
+//                                                       toItem:_titleLabel
+//                                                       attribute:NSLayoutAttributeTop
+//                                                       multiplier:1 constant:50];
+//        
+//        NSLayoutConstraint *titleLableLeatdingConstraint = [NSLayoutConstraint
+//                                                            constraintWithItem:_titleLabel
+//                                                            attribute:NSLayoutAttributeLeading
+//                                                            relatedBy:NSLayoutRelationEqual
+//                                                            toItem:_photo
+//                                                            attribute:NSLayoutAttributeTrailing
+//                                                            multiplier:1 constant:75];
+//        
+//        NSLayoutConstraint *titleLableHeight = [NSLayoutConstraint
+//                                                constraintWithItem:_titleLabel
+//                                                attribute:NSLayoutAttributeHeight
+//                                                relatedBy:NSLayoutRelationEqual
+//                                                toItem:nil
+//                                                attribute:NSLayoutAttributeNotAnAttribute
+//                                                multiplier:1 constant:[[self class] heightWithPOOFriendText:_titleLabel.text subTitle:_subtitleLabel.text andMaxWidth:CGRectGetWidth(self.bounds)]];
+//        NSLayoutConstraint *titleLableWigth = [NSLayoutConstraint
+//                                               constraintWithItem:_titleLabel
+//                                               attribute:NSLayoutAttributeWidth
+//                                               relatedBy:NSLayoutRelationEqual
+//                                               toItem:nil attribute:NSLayoutAttributeNotAnAttribute
+//                                               multiplier:1 constant:CGRectGetWidth(self.bounds)];
+//        // subTitleLable Constrains
+//        NSLayoutConstraint *subTitleLableTopConstraint = [NSLayoutConstraint
+//                                                          constraintWithItem:_titleLabel
+//                                                          attribute:NSLayoutAttributeTop
+//                                                          relatedBy:NSLayoutRelationEqual
+//                                                          toItem:_subtitleLabel
+//                                                          attribute:NSLayoutAttributeBottom
+//                                                          multiplier:1 constant:0];
+//        NSLayoutConstraint *subTitleLableBottomConstraint = [NSLayoutConstraint
+//                                                          constraintWithItem:_subtitleLabel
+//                                                          attribute:NSLayoutAttributeBottom
+//                                                          relatedBy:NSLayoutRelationEqual
+//                                                          toItem:self
+//                                                          attribute:NSLayoutAttributeBottom
+//                                                          multiplier:1 constant:0];
+//        
+//        NSLayoutConstraint *subTitleLableLeadingConstraint = [NSLayoutConstraint
+//                                                              constraintWithItem:_subtitleLabel
+//                                                              attribute:NSLayoutAttributeLeading
+//                                                              relatedBy:NSLayoutRelationEqual
+//                                                              toItem:_photo
+//                                                              attribute:NSLayoutAttributeTrailing
+//                                                              multiplier:1 constant:75];
+//        NSLayoutConstraint *subTitleLableTrailingConstraint = [NSLayoutConstraint
+//                                                              constraintWithItem:_subtitleLabel
+//                                                              attribute:NSLayoutAttributeTrailing
+//                                                              relatedBy:NSLayoutRelationEqual
+//                                                              toItem:self
+//                                                              attribute:NSLayoutAttributeTrailing
+//                                                              multiplier:1 constant:-5];
+//        
+//        NSLayoutConstraint *subTitleLableHeight = [NSLayoutConstraint
+//                                                   constraintWithItem:_subtitleLabel
+//                                                   attribute:NSLayoutAttributeHeight
+//                                                   relatedBy:NSLayoutRelationEqual
+//                                                   toItem:nil
+//                                                   attribute:NSLayoutAttributeNotAnAttribute
+//                                                   multiplier:1 constant:[[self class] heightWithPOOFriendText:_titleLabel.text subTitle:_subtitleLabel.text andMaxWidth:CGRectGetWidth(self.bounds)]];
+//        NSLayoutConstraint *subTitleLableWigth = [NSLayoutConstraint
+//                                                  constraintWithItem:_subtitleLabel
+//                                                  attribute:NSLayoutAttributeWidth
+//                                                  relatedBy:NSLayoutRelationEqual
+//                                                  toItem:nil
+//                                                  attribute:NSLayoutAttributeNotAnAttribute
+//                                                  multiplier:1 constant:CGRectGetWidth(self.bounds)];
+//        
+//        [self addConstraints:@[photoTopConstraint, photoBottomConstraint, photoLeadingConstraint, titleLableTopConstraint, titleLableLeatdingConstraint, titleLableHeight, titleLableWigth, subTitleLableTopConstraint, subTitleLableLeadingConstraint, subTitleLableHeight, subTitleLableWigth,subTitleLableBottomConstraint, subTitleLableTrailingConstraint]];
+//    }
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

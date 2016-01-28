@@ -13,12 +13,14 @@
 #import "POOPhoneBookContact.h"
 #import "POOVKUserModel.h"
 #import "POOContactInfoViewController.h"
+#import "String+Md5.h"
 
 typedef void (^CompletionHandler)(NSDictionary *response, NSError *error);
 
 static const NSString *USERID;
+static const NSString *USER_TOKEN;
 
-@interface POOLogInVKViewController () < UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchBarDelegate>
+@interface POOLogInVKViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
 
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) UISegmentedControl *segmentController;
@@ -28,21 +30,27 @@ static const NSString *USERID;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *namesBySection;
 @property (nonatomic, strong) NSArray *sectionSource;
-@property (nonatomic, strong) NSArray *searchResults;
+@property (nonatomic, strong) NSMutableArray *invates;
 
 @end
 
 
 @implementation POOLogInVKViewController
 
-- (void)initProperty {
-    USERID = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
-    _groupOfContact = [[NSMutableArray alloc] init];
-    _friends = [[NSMutableArray alloc] init];
-    _namesBySection = [[NSMutableDictionary alloc] init];
-    _sectionSource = [[NSMutableArray alloc] init];
-    _phoneContact = [[NSMutableArray alloc] init];
+- (instancetype) init {
+    self = [super init];
+    if (self != nil) {
+        USERID = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
+        USER_TOKEN = [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"];
+        _groupOfContact = [[NSMutableArray alloc] init];
+        _friends = [[NSMutableArray alloc] init];
+        _namesBySection = [[NSMutableDictionary alloc] init];
+        _sectionSource = [[NSMutableArray alloc] init];
+        _phoneContact = [[NSMutableArray alloc] init];
+        _invates = [[NSMutableArray alloc] init];
+    }
     
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -50,10 +58,10 @@ static const NSString *USERID;
     
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"Header_black@2x.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0) resizingMode:UIImageResizingModeStretch] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
     
-    [self initProperty];
     [self getVKFriends];
     [self creatUI];
     [self getAllContacts];
+    [self getInvites];
 
     _sectionSource = [self getSortedArrayBySection:_phoneContact];
 }
@@ -66,7 +74,7 @@ static const NSString *USERID;
 }
 
 - (NSArray *)getSortedArrayBySection:(NSArray *)array {
-    
+    [_namesBySection removeAllObjects];
     NSMutableArray *sectionKey = [[NSMutableArray alloc] init];
     
     for (id object in array) {
@@ -87,7 +95,6 @@ static const NSString *USERID;
             
             [nameInSection addObject:contact];
             [_namesBySection setObject:nameInSection forKey:sectionName];
-            NSLog(@"%@", _namesBySection);
         } else {
             POOVKUserModel *user = (POOVKUserModel *)object;
             NSString *sectionName = [user.name substringToIndex:1];
@@ -111,8 +118,58 @@ static const NSString *USERID;
     return [sectionKey sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 
+#pragma mark - Get Contacts, Friends, Invate methods
+- (void)getInvites {
+    NSString *md5 = [[NSString
+                      stringWithFormat:@"/method/friends.getRequests?extended=1&need_mutual=1&out=1&access_token=%@%@",
+                      USER_TOKEN,[[NSUserDefaults standardUserDefaults] objectForKey:@"secret"]]
+                      MD5Hash];
+    
+    NSString *stringFriendsRequest2 = [NSString
+                                       stringWithFormat:@"https://api.vk.com/method/friends.getRequests?extended=1&need_mutual=1&out=1&access_token=%@&sig=%@",
+                                       USER_TOKEN, md5];
+    
+    [self doRequestByStringWithBlock:stringFriendsRequest2 block:^(NSDictionary *response, NSError *error) {
+        for (NSDictionary *userId in response) {
+            NSString *stringFriendsRequest = [NSString
+                                              stringWithFormat:@"http://api.vk.com/method/users.get?user_id=%@&order=hints&fields=online,photo_100",
+                                              [userId objectForKey:@"uid"]];
+            
+            [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSDictionary *response, NSError *error) {
+                for (NSDictionary *inviter in response) {
+                    POOVKUserModel *vkUser = [[POOVKUserModel alloc] initWithDictionary:inviter];
+                    [_invates addObject:vkUser];
+                }
+            }];
+        }
+    }];
+}
+
+- (void)getAllContacts {
+    if ([CNContactStore class]) {
+        CNContactStore *addresBook = [[CNContactStore alloc] init];
+        
+        NSArray *keysToFetch = @[CNContactEmailAddressesKey,
+                                 CNContactFamilyNameKey,
+                                 CNContactGivenNameKey,
+                                 CNContactPhoneNumbersKey,
+                                 CNContactPostalAddressesKey,
+                                 CNContactMiddleNameKey,
+                                 CNContactPreviousFamilyNameKey];
+        CNContactFetchRequest *fetchRequest = [[CNContactFetchRequest alloc] initWithKeysToFetch:keysToFetch];
+        
+        [addresBook enumerateContactsWithFetchRequest:fetchRequest error:nil usingBlock:^(CNContact * _Nonnull contact, BOOL * _Nonnull stop) {
+            [_groupOfContact addObject:contact];
+        }];
+        
+        [self setBookContact];
+    }
+}
+
 - (void)getVKFriends {
-    NSString *stringFriendsRequest = [NSString stringWithFormat:@"http://api.vk.com/method/friends.get?user_id=%@&order=hints&fields=online,photo_100", USERID];
+    NSString *stringFriendsRequest = [NSString
+                                      stringWithFormat:@"http://api.vk.com/method/friends.get?user_id=%@&order=hints&fields=online,photo_100",
+                                      USERID];
     
     [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSDictionary *response, NSError *error) {
         for (NSDictionary *user in response) {
@@ -122,6 +179,7 @@ static const NSString *USERID;
     }];
 }
 
+#pragma mark - Request
 - (void)doRequestByStringWithBlock:(NSString *)stringRequest block:(void (^)(NSDictionary *response, NSError *error))completionHandler {
     NSURL *chekPhoneURL = [NSURL URLWithString:stringRequest];
     NSURLRequest *checkPhoneRequest = [NSURLRequest requestWithURL:chekPhoneURL];
@@ -147,44 +205,23 @@ static const NSString *USERID;
     [checkPhoneDataTask resume];
 }
 
-- (void)getAllContacts {
-    if ([CNContactStore class]) {
-        CNContactStore *addresBook = [[CNContactStore alloc] init];
-        
-        NSArray *keysToFetch = @[CNContactEmailAddressesKey,
-                                 CNContactFamilyNameKey,
-                                 CNContactGivenNameKey,
-                                 CNContactPhoneNumbersKey,
-                                 CNContactPostalAddressesKey,
-                                 CNContactMiddleNameKey,
-                                 CNContactPreviousFamilyNameKey];
-        CNContactFetchRequest *fetchRequest = [[CNContactFetchRequest alloc] initWithKeysToFetch:keysToFetch];
-        [addresBook enumerateContactsWithFetchRequest:fetchRequest error:nil usingBlock:^(CNContact * _Nonnull contact, BOOL * _Nonnull stop) {
-            [_groupOfContact addObject:contact];
-        }];
-        
-        [self setBookContact];
-    }
-}
 #pragma mark - Table
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     return _sectionSource;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _namesBySection.allKeys.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSString *currentKey = [_sectionSource objectAtIndex:section];
     NSArray *currentNames = [_namesBySection objectForKey:currentKey];
+    
     return currentNames.count;
 }
 
-- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return [_sectionSource objectAtIndex:section];
 }
 
@@ -207,7 +244,7 @@ static const NSString *USERID;
         return cell;
     }
 
-    if (_segmentController.selectedSegmentIndex == 1) {
+    if (_segmentController.selectedSegmentIndex == 1 || _segmentController.selectedSegmentIndex == 2) {
         POOTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         
         if (cell == nil) {
@@ -226,7 +263,7 @@ static const NSString *USERID;
     return NULL;
 }
 
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (_segmentController.selectedSegmentIndex == 0) {
@@ -244,7 +281,39 @@ static const NSString *USERID;
     NSString *curentKey = [_sectionSource objectAtIndex:indexPath.section];
     NSArray * currentNames = [_namesBySection objectForKey:curentKey];
     POOVKUserModel *friend = [currentNames objectAtIndex:indexPath.row];
+    
     return [POOTableViewCell heightWithPOOFriendText:friend.name subTitle:@"oline" andMaxWidth:CGRectGetWidth(_tableView.bounds)];
+}
+
+#pragma mark - Search Delegate
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    NSMutableArray *filtreadArray = [NSMutableArray array];
+    
+    if (![searchString isEqualToString:@""]) {
+        if (_segmentController.selectedSegmentIndex == 0) {
+            for (POOPhoneBookContact *contact in _phoneContact) {
+                if ([contact.name localizedCaseInsensitiveContainsString:searchString] || [contact.secondName localizedCaseInsensitiveContainsString:searchString]) {
+                    [filtreadArray addObject:contact];
+                }
+            }
+        } else {
+            for (POOVKUserModel *friend in _friends) {
+                if ([friend.name localizedCaseInsensitiveContainsString:searchString] || [friend.lastName localizedCaseInsensitiveContainsString:searchString]) {
+                    [filtreadArray addObject:friend];
+                }
+            }
+        }
+        _sectionSource = [self getSortedArrayBySection:filtreadArray];
+    } else {
+        if (_segmentController.selectedSegmentIndex == 0) {
+            _sectionSource = [self getSortedArrayBySection:_phoneContact];
+        } else {
+            _sectionSource = [self getSortedArrayBySection:_friends];
+        }
+    }
+    
+    [_tableView reloadData];
 }
 
 #pragma mark - UI
@@ -257,8 +326,6 @@ static const NSString *USERID;
     _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     _searchController.searchResultsUpdater = self;
     _searchController.dimsBackgroundDuringPresentation = NO;
-    _searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
-                                                      NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
     
     _searchController.searchBar.delegate = self;
     
@@ -266,9 +333,9 @@ static const NSString *USERID;
     self.definesPresentationContext = YES;
     
     [self.view addSubview:_tableView];
-
+    
     _tableView.translatesAutoresizingMaskIntoConstraints = NO;
-
+    
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_tableView attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
@@ -276,6 +343,7 @@ static const NSString *USERID;
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_tableView attribute:NSLayoutAttributeLeading multiplier:1 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_tableView attribute:NSLayoutAttributeTrailing multiplier:1 constant:0]];
 }
+
 
 - (void)creatSegmentController {
     _segmentController = [[UISegmentedControl alloc] initWithItems:@[@"Контакты", @"Друзья", @"Заявки"]];
@@ -290,23 +358,19 @@ static const NSString *USERID;
 }
 
 - (void)segmentSwithcher:(UISegmentedControl *)segment {
-    
     if (segment.selectedSegmentIndex == 0) {
-        _namesBySection = [NSMutableDictionary dictionary];
-        
         _sectionSource = [self getSortedArrayBySection:_phoneContact];
         [_tableView reloadData];
     }
     
     if (segment.selectedSegmentIndex == 1) {
-        _namesBySection = [NSMutableDictionary dictionary];
-        
         _sectionSource = [self getSortedArrayBySection:_friends];
         [_tableView reloadData];
     }
     
     if (segment.selectedSegmentIndex == 2) {
-        
+        _sectionSource = [self getSortedArrayBySection:_invates];
+        [_tableView reloadData];
     }
 }
 

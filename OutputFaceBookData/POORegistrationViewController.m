@@ -205,6 +205,7 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     [self.view addSubview:registrationButton];
     [self creatConstrainsToSubView:registrationButton];
 }
+
 #pragma mark - Creat constrains to subView
 - (void) creatConstrainsToSubView:(UIButton *)registrationButton {
     if (self.view.constraints.count == 0) {

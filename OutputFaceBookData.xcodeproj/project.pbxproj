@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		5791B2D5C26160ED45146CA2 /* Pods_OutputFaceBookData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040808CE55AAAB5B51A2F /* Pods_OutputFaceBookData.framework */; };
 		D20749521C206AEC00A6EB2A /* POORegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */; };
-		D20749581C22ED1300A6EB2A /* WhiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D20749571C22ED1300A6EB2A /* WhiteArrow@2x.png */; };
-		D207495A1C22F28E00A6EB2A /* SendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D20749591C22F28E00A6EB2A /* SendButton@2x.png */; };
-		D207495C1C22F29E00A6EB2A /* SendButton_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D207495B1C22F29E00A6EB2A /* SendButton_pressed@2x.png */; };
 		D20749651C24230E00A6EB2A /* Header_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D20749641C24230E00A6EB2A /* Header_black@2x.png */; };
 		D225FB851BDA398900711C53 /* POOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D225FB841BDA398900711C53 /* POOCache.m */; };
 		D225FB8A1BDA6CE100711C53 /* String+Md5.m in Sources */ = {isa = PBXBuildFile; fileRef = D225FB891BDA6CE100711C53 /* String+Md5.m */; };
@@ -23,7 +20,9 @@
 		D24BAD341BE7C0E4003C96A9 /* POOFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAD331BE7C0E4003C96A9 /* POOFeedViewController.m */; };
 		D25412DA1BF20CC7000BD9D3 /* POOCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D25412D91BF20CC7000BD9D3 /* POOCollectionViewLayout.m */; };
 		D25E6AF31C5631E00091D256 /* POOContactInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D25E6AF21C5631E00091D256 /* POOContactInfoViewController.m */; };
-		D25E6AF91C563CBD0091D256 /* Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = D25E6AF81C563CBD0091D256 /* Placeholder.png */; };
+		D280199A1C58E5C700A4EF10 /* Placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D28019991C58E5C700A4EF10 /* Placeholder.jpg */; };
+		D280199C1C58E5FB00A4EF10 /* WhiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D280199B1C58E5FB00A4EF10 /* WhiteArrow@2x.png */; };
+		D280199E1C58E66700A4EF10 /* SendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D280199D1C58E66700A4EF10 /* SendButton@2x.png */; };
 		D292873B1BCBFCDE0089E3BE /* POOTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D29287391BCBFCDE0089E3BE /* POOTableViewCell.m */; };
 		D292873C1BCBFCDE0089E3BE /* POOTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D292873A1BCBFCDE0089E3BE /* POOTableViewCell.xib */; };
 		D293A2131C47D0A300EDDF59 /* POOLogInVKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D293A2121C47D0A300EDDF59 /* POOLogInVKViewController.m */; };
@@ -59,9 +58,6 @@
 		D20749471C20365E00A6EB2A /* VK_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VK_ios_sdk.framework; path = "Pods/../build/Debug-iphoneos/VK_ios_sdk.framework"; sourceTree = "<group>"; };
 		D20749501C206AEC00A6EB2A /* POORegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POORegistrationViewController.h; sourceTree = "<group>"; };
 		D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POORegistrationViewController.m; sourceTree = "<group>"; };
-		D20749571C22ED1300A6EB2A /* WhiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WhiteArrow@2x.png"; path = "../Downloads/Messenger_Retina/WhiteArrow@2x.png"; sourceTree = "<group>"; };
-		D20749591C22F28E00A6EB2A /* SendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SendButton@2x.png"; path = "../Downloads/Messenger_Retina/SendButton@2x.png"; sourceTree = "<group>"; };
-		D207495B1C22F29E00A6EB2A /* SendButton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SendButton_pressed@2x.png"; path = "../Downloads/Messenger_Retina/SendButton_pressed@2x.png"; sourceTree = "<group>"; };
 		D20749641C24230E00A6EB2A /* Header_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Header_black@2x.png"; path = "../Downloads/Messenger_Retina/Header_black@2x.png"; sourceTree = "<group>"; };
 		D225FB831BDA398900711C53 /* POOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOCache.h; sourceTree = "<group>"; };
 		D225FB841BDA398900711C53 /* POOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOCache.m; sourceTree = "<group>"; };
@@ -82,8 +78,10 @@
 		D25412D91BF20CC7000BD9D3 /* POOCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOCollectionViewLayout.m; sourceTree = "<group>"; };
 		D25E6AF11C5631E00091D256 /* POOContactInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOContactInfoViewController.h; sourceTree = "<group>"; };
 		D25E6AF21C5631E00091D256 /* POOContactInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOContactInfoViewController.m; sourceTree = "<group>"; };
-		D25E6AF81C563CBD0091D256 /* Placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Placeholder.png; path = ../Downloads/Placeholder.png; sourceTree = "<group>"; };
 		D26773761C1F1E8B00CDB8D5 /* libVKSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libVKSdk.a; path = "../Downloads/vk-ios-sdk-master/build/Debug-iphoneos/libVKSdk.a"; sourceTree = "<group>"; };
+		D28019991C58E5C700A4EF10 /* Placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Placeholder.jpg; sourceTree = "<group>"; };
+		D280199B1C58E5FB00A4EF10 /* WhiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WhiteArrow@2x.png"; sourceTree = "<group>"; };
+		D280199D1C58E66700A4EF10 /* SendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SendButton@2x.png"; sourceTree = "<group>"; };
 		D29287381BCBFCDE0089E3BE /* POOTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOTableViewCell.h; sourceTree = "<group>"; };
 		D29287391BCBFCDE0089E3BE /* POOTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOTableViewCell.m; sourceTree = "<group>"; };
 		D292873A1BCBFCDE0089E3BE /* POOTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POOTableViewCell.xib; sourceTree = "<group>"; };
@@ -343,15 +341,14 @@
 		D2DA3A421C1C79620043AD5A /* images */ = {
 			isa = PBXGroup;
 			children = (
-				D20749591C22F28E00A6EB2A /* SendButton@2x.png */,
-				D207495B1C22F29E00A6EB2A /* SendButton_pressed@2x.png */,
-				D20749571C22ED1300A6EB2A /* WhiteArrow@2x.png */,
+				D28019991C58E5C700A4EF10 /* Placeholder.jpg */,
+				D280199D1C58E66700A4EF10 /* SendButton@2x.png */,
+				D280199B1C58E5FB00A4EF10 /* WhiteArrow@2x.png */,
 				D2310F8C1C1EF0F6000B68D9 /* RegButton@2x.png */,
 				D2310F881C1C9161000B68D9 /* Background@2x.png */,
 				D20749641C24230E00A6EB2A /* Header_black@2x.png */,
 				D2DA3A451C1C820C0043AD5A /* Header@2x.png */,
 				D2DA3A431C1C79810043AD5A /* LoginButton@2x.png */,
-				D25E6AF81C563CBD0091D256 /* Placeholder.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -417,19 +414,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D207495A1C22F28E00A6EB2A /* SendButton@2x.png in Resources */,
 				D2DA3A441C1C79810043AD5A /* LoginButton@2x.png in Resources */,
 				D2A8CBB31BC7A62C006BF1F6 /* LaunchScreen.storyboard in Resources */,
 				D292873C1BCBFCDE0089E3BE /* POOTableViewCell.xib in Resources */,
 				D2310F891C1C9161000B68D9 /* Background@2x.png in Resources */,
-				D25E6AF91C563CBD0091D256 /* Placeholder.png in Resources */,
+				D280199A1C58E5C700A4EF10 /* Placeholder.jpg in Resources */,
 				D20749651C24230E00A6EB2A /* Header_black@2x.png in Resources */,
-				D20749581C22ED1300A6EB2A /* WhiteArrow@2x.png in Resources */,
 				D2DA3A461C1C820C0043AD5A /* Header@2x.png in Resources */,
 				D2A8CBB01BC7A62C006BF1F6 /* Assets.xcassets in Resources */,
-				D207495C1C22F29E00A6EB2A /* SendButton_pressed@2x.png in Resources */,
 				D2FE07CC1BD4E6B7004E0C95 /* POOCollectionViewCell.xib in Resources */,
 				D2310F8D1C1EF0F6000B68D9 /* RegButton@2x.png in Resources */,
+				D280199C1C58E5FB00A4EF10 /* WhiteArrow@2x.png in Resources */,
+				D280199E1C58E66700A4EF10 /* SendButton@2x.png in Resources */,
 				D2A8CBAE1BC7A62C006BF1F6 /* Main.storyboard in Resources */,
 				D24BAD311BE7B7E0003C96A9 /* POOFeedTableViewCell.xib in Resources */,
 			);

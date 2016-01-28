@@ -22,6 +22,9 @@ static NSArray *SCOPE = nil;
 @property (nonatomic, strong) UITextField *phoneNumber;
 @property (nonatomic, strong) UITextField *password;
 
+@property (nonatomic, assign) BOOL authorized;
+
+
 @end
 
 @implementation POOFacebookData
@@ -34,15 +37,25 @@ static NSArray *SCOPE = nil;
     SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
     [[VKSdk initializeWithAppId:@"5187957"] registerDelegate:self];
     [[VKSdk instance] setUiDelegate:self];
+    
+    [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
+        if (state == VKAuthorizationAuthorized) {
+            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+            [self presentViewController:navController animated:YES completion:NULL];
+        } else if (error) {
+            NSLog(@"Error:%@", error);
+        }
+    }];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                          openURL:url
-                                                sourceApplication:sourceApplication
-                                                       annotation:annotation];
+                                                      openURL:url
+                                                      sourceApplication:sourceApplication
+                                                      annotation:annotation];
 }
 
 #pragma mark - Button cliked
@@ -159,13 +172,15 @@ static NSArray *SCOPE = nil;
 - (void) vkLoginButtonClicked   {
     self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
     self.webView.delegate = self;
-    NSString *stringUrl = @"http://oauth.vk.com/authorize?client_id=5187957&scope=wall,offline&redirect_uri=oauth.vk.com/blank.html&display=touch&response_type=token";
+    NSString *stringUrl = [NSString stringWithFormat:@"http://oauth.vk.com/authorize?client_id=5187957&scope=%@&redirect_uri=oauth.vk.com/blank.html&display=touch&response_type=token", [SCOPE componentsJoinedByString:@","]];
     NSURL *url = [NSURL URLWithString:stringUrl];
-    [self.view addSubview:self.webView];
+    //[self.view addSubview:self.webView];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+    [VKSdk authorize:SCOPE];
 }
 -(void) webViewDidFinishLoad:(UIWebView *)webView {
     NSString *currentURL = self.webView.request.URL.absoluteString;
+    NSLog(@"%@",currentURL);
     NSRange textRange =[[currentURL lowercaseString] rangeOfString:[@"access_token" lowercaseString]];
     if(textRange.location != NSNotFound) {
         NSArray* data = [currentURL componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"=&"]];
@@ -173,13 +188,18 @@ static NSArray *SCOPE = nil;
         [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:1] forKey:@"access_token"];
         [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:3] forKey:@"expires_in"];
         [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:5] forKey:@"user_id"];
+        [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:7] forKey:@"secret"];
     }
     
-    [VKSdk authorize:SCOPE];
-    
-    POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    [self presentViewController:navController animated:YES completion:NULL];
+    [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
+        if (state == VKAuthorizationAuthorized) {
+            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+            [self presentViewController:navController animated:YES completion:NULL];
+        } else if (error) {
+            NSLog(@"Error:%@", error);
+        }
+    }];
 }
 
 #pragma mark - Constraints
@@ -233,17 +253,10 @@ static NSArray *SCOPE = nil;
 
 - (void) vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result {
     if (result.token) {
-        [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
-            if (state == VKAuthorizationAuthorized) {
-                POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-                [self presentViewController:navController animated:YES completion:NULL];
-            } else if (error) {
-                NSLog(@"Error:%@", error);
-            }
-        }];
+        [self dismissViewControllerAnimated:NO completion:NULL];
+        [self.view addSubview:_webView];
     }
-    else if (result.error) {
+     if (result.error) {
         NSLog(@"Error:%@",result.error);
     }
 }
@@ -254,7 +267,6 @@ static NSArray *SCOPE = nil;
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller {
     [self presentViewController:controller animated:YES completion:NULL];
-    [_webView removeFromSuperview];
 }
 
 - (void)vkSdkNeedCaptchaEnter:(VKError *)captchaError {
