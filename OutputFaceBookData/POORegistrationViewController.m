@@ -7,11 +7,8 @@
 //
 
 #import "POORegistrationViewController.h"
-#import <CoreData/CoreData.h>
-
-static NSString *APP_ID = @"5187957";
-static NSString *SECRET = @"sBsolEPAesngv7KAXDv7";
-static NSInteger INDENT = 20;
+#import "Consts.h"
+#import "StringLocalizer.h"
 
 typedef void (^CompletionHandler)(NSString *response, NSError *error);
 
@@ -32,19 +29,19 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     [super viewDidLoad];
     [self creatSubView];
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed: @"Background@2x.png"]]];
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"Header_black@2x.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0) resizingMode:UIImageResizingModeStretch] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.topItem.title = @"Регистрация";
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed: @"Background"]]];
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"Header_black"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0) resizingMode:UIImageResizingModeStretch] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.topItem.title = [@"navigationController.navigationBar.topItem.titleText" localized];
     
 }
 #pragma mark button clicked
 - (void) vkRegistration {
-    NSString *checkPhoneRequest = [NSString stringWithFormat: @"https://api.vk.com/method/auth.checkPhone?phone=%@&client_id=%@&client_secret=%@",self.phone.text, APP_ID, SECRET];
+    NSString *checkPhoneRequest = [NSString stringWithFormat: @"https://api.vk.com/method/auth.checkPhone?phone=%@&client_id=%@&client_secret=%@",self.phone.text, kConstsAppId, kConstsSecret];
     
     [self doRequestByStringWithBlock:checkPhoneRequest block:^(NSString *response, NSError *error) {
         
         if ([response integerValue] == 1 && ![self.firstName.text  isEqual: @""] && ![self.lastName.text  isEqual: @""] && ![self.password.text  isEqual: @""]) {
-            NSString *authorizationRequest = [NSString stringWithFormat:@"https://api.vk.com/method/auth.signup?first_name=%@&last_name=%@&client_id=%@&client_secret=%@&phone=%@&password=%@&test_mode=1",self.firstName.text, self.lastName.text, APP_ID, SECRET, self.phone.text, self.password.text];
+            NSString *authorizationRequest = [NSString stringWithFormat:@"https://api.vk.com/method/auth.signup?first_name=%@&last_name=%@&client_id=%@&client_secret=%@&phone=%@&password=%@&test_mode=1",self.firstName.text, self.lastName.text, kConstsAppId, kConstsSecret, self.phone.text, self.password.text];
             [self doRequestByString:authorizationRequest];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self creatConfirmWindow];
@@ -53,25 +50,25 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.phone.text = nil;
                 UIColor *color = [UIColor redColor];
-                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Неверный номер" attributes:@{NSForegroundColorAttributeName: color}];
+                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[@"phoneErrorText1" localized] attributes:@{NSForegroundColorAttributeName: color}];
             });
         } else if([response integerValue] == 1004) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.phone.text = nil;
                 UIColor *color = [UIColor redColor];
-                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Номер телефона занят другим пользователем." attributes:@{NSForegroundColorAttributeName: color}];
+                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[@"phoneErrorText2" localized] attributes:@{NSForegroundColorAttributeName: color}];
             });
         } else if ([response integerValue] == 100) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.phone.text = nil;
                 UIColor *color = [UIColor redColor];
-                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Неверно введен номер" attributes:@{NSForegroundColorAttributeName: color}];
+                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[@"phoneErrorText3" localized]attributes:@{NSForegroundColorAttributeName: color}];
             });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.phone.text = nil;
                 UIColor *color = [UIColor redColor];
-                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Не все поля были заполнены" attributes:@{NSForegroundColorAttributeName: color}];
+                self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[@"phoneErrorText4" localized] attributes:@{NSForegroundColorAttributeName: color}];
             });
         }
     }];
@@ -79,23 +76,23 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
 
 #pragma mark AlertViews. End registration
 - (void) creatConfirmWindow {
-    UIAlertController *passwordConfirmation = [UIAlertController alertControllerWithTitle:@"Введите Пароль" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *passwordConfirmation = [UIAlertController alertControllerWithTitle:[@"passwordConfirmationText" localized] message:nil preferredStyle:UIAlertControllerStyleAlert];
 
     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        NSString *confirmationRegistration = [NSString stringWithFormat:@"https://api.vk.com/method/auth.confirm?client_id=%@&client_secret=%@&phone=%@&code=%@&test_mode=1",APP_ID, SECRET, self.phone.text, self.confimPassword.text];
+        NSString *confirmationRegistration = [NSString stringWithFormat:@"https://api.vk.com/method/auth.confirm?client_id=%@&client_secret=%@&phone=%@&code=%@&test_mode=1",kConstsAppId, kConstsSecret, self.phone.text, self.confimPassword.text];
         [self doRequestByStringWithBlock:confirmationRegistration block:^(NSString *response, NSError *error) {
             [self buildAllertControllerWithFlag:[response integerValue]];
         }];
     }];
     
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:[@"Cancel" localized] style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action) {
                                                        [passwordConfirmation dismissViewControllerAnimated:YES completion:nil];
                                                    }];
     [passwordConfirmation addAction:ok];
     [passwordConfirmation addAction:cancel];
     [passwordConfirmation addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"Пароль подтверждения регистрации";
+        textField.placeholder = [@"textField.placeholderText" localized];
         self.confimPassword = textField;
     }];
     
@@ -106,12 +103,12 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     UIAlertController *alertController = nil;
     UIAlertAction *ok = nil;
     if (flag == 1) {
-        alertController = [UIAlertController alertControllerWithTitle:@"Регистрация прошла успешно" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        alertController = [UIAlertController alertControllerWithTitle:[@"alertControllerOKText" localized] message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         }];
     } else {
-        alertController = [UIAlertController alertControllerWithTitle:@"Неправильны пароль" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        alertController = [UIAlertController alertControllerWithTitle:[@"alertControllerNotOKText" localized] message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self creatConfirmWindow];
         }];
@@ -169,20 +166,20 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
 - (void) creatSubView {
     self.firstName = [[UITextField alloc] init];
     [self.firstName setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.firstName setPlaceholder:@"Ваше имя"];
+    [self.firstName setPlaceholder:[@"firstNameText" localized]];
     
     self.lastName = [[UITextField alloc] init];
     [self.lastName setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.lastName setPlaceholder:@"Ваша фамилия"];
+    [self.lastName setPlaceholder:[@"lastNameText" localized]];
     
     self.phone = [[UITextField alloc] init];
     [self.phone setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.phone setPlaceholder:@"Номер телефона"];
-    [self.phone setPlaceholder:@"380995031116"];
+    [self.phone setPlaceholder:[@"phoneText" localized]];
+    [self.phone setPlaceholder:[@"380995031116" localized]];
     
     self.password = [[UITextField alloc] init];
     [self.password setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.password setPlaceholder:@"Пароль"];
+    [self.password setPlaceholder:[@"passwordText" localized]];
     self.password.secureTextEntry = YES;
     
     //    self.repeatPassword = [[UITextField alloc] init];
@@ -191,11 +188,11 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     //    self.repeatPassword.secureTextEntry = YES;
     
     UIButton *registrationButton = [UIButton new];
-    [registrationButton setTitle:@"Зарегистрироваться" forState:UIControlStateNormal];
+    [registrationButton setTitle:[@"registrationButtonText" localized] forState:UIControlStateNormal];
     registrationButton.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
     [registrationButton setImageEdgeInsets:UIEdgeInsetsMake(0, registrationButton.frame.origin.x + 100, 0, 0)];
-    [registrationButton setBackgroundImage:[UIImage imageNamed:@"LoginButton@2x.png"] forState:UIControlStateNormal];
-    [registrationButton setImage:[UIImage imageNamed:@"WhiteArrow@2x.png"] forState:UIControlStateNormal];
+    [registrationButton setBackgroundImage:[UIImage imageNamed:@"LoginButton"] forState:UIControlStateNormal];
+    [registrationButton setImage:[UIImage imageNamed:@"WhiteArrow"] forState:UIControlStateNormal];
     [registrationButton addTarget:self action:@selector(vkRegistration) forControlEvents:UIControlEventTouchDown];
     
     [self.view addSubview:self.firstName];
@@ -216,30 +213,30 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
         self.phone.translatesAutoresizingMaskIntoConstraints = NO;
         self.password.translatesAutoresizingMaskIntoConstraints = NO;
         // textfiled name
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.firstName attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.firstName attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:kConstsIndent]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.firstName attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.firstName attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.firstName attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:kConstsIndent]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.firstName attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:kConstsIndent]];
         // textfiled last name
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lastName attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.firstName attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lastName attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view   attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.lastName attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lastName attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:kConstsIndent]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view   attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.lastName attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:kConstsIndent]];
         // textfiled phone
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.phone attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.lastName attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.phone attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.phone attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.phone attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:kConstsIndent]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.phone attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:kConstsIndent]];
         //    textfiled password
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.password attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.phone attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.password attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.password attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.password attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:kConstsIndent]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.password attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:kConstsIndent]];
         //reg button
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:registrationButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.password attribute:NSLayoutAttributeBottom multiplier:1.0f constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:registrationButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.password attribute:NSLayoutAttributeBottom multiplier:1.0f constant:kConstsIndent]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:registrationButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:registrationButton attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:registrationButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:kConstsIndent]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:registrationButton attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:kConstsIndent]];
     }
 }
 

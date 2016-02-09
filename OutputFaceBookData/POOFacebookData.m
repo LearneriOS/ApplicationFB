@@ -12,6 +12,7 @@
 #import "POOFacebookFeed.h"
 #import "POOLogInVKViewController.h"
 #import "vkSdk.h"
+#import "StringLocalizer.h"
 
 static NSArray *SCOPE = nil;
 
@@ -31,22 +32,12 @@ static NSArray *SCOPE = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background@2x.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]];
     [self creatLoginButtotAndAddToSubView];
     //[VKSdk forceLogout];
     SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
     [[VKSdk initializeWithAppId:@"5187957"] registerDelegate:self];
     [[VKSdk instance] setUiDelegate:self];
-    
-    [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
-        if (state == VKAuthorizationAuthorized) {
-            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-            [self presentViewController:navController animated:YES completion:NULL];
-        } else if (error) {
-            NSLog(@"Error:%@", error);
-        }
-    }];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
@@ -123,34 +114,34 @@ static NSArray *SCOPE = nil;
 - (void) creatLoginButtotAndAddToSubView {
     UIButton *facebookLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     facebookLoginButton.backgroundColor = [UIColor darkGrayColor];
-    [facebookLoginButton setTitle: @"Войти в Facebook" forState: UIControlStateNormal];
+    [facebookLoginButton setTitle: [@"facebookLoginButtonText" localized] forState: UIControlStateNormal];
     [facebookLoginButton
      addTarget:self
      action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *vkLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [vkLoginButton setBackgroundImage:[UIImage imageNamed:@"LoginButton@2x.png"] forState:UIControlStateNormal];
-    [vkLoginButton setTitle: @"Войти в VK" forState: UIControlStateNormal];
+    [vkLoginButton setBackgroundImage:[UIImage imageNamed:@"LoginButton"] forState:UIControlStateNormal];
+    [vkLoginButton setTitle: [@"vkLoginButtonText" localized] forState: UIControlStateNormal];
     [vkLoginButton addTarget:self action:@selector(vkLoginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *vkRegistration = [[UIButton alloc] init];
-    [vkRegistration setTitle:@"Зарегестрироваться в вк" forState:UIControlStateNormal];
-    [vkRegistration setBackgroundImage:[UIImage imageNamed:@"RegButton@2x.png"] forState:UIControlStateNormal];
+    [vkRegistration setTitle:[@"vkRegistrationText" localized] forState:UIControlStateNormal];
+    [vkRegistration setBackgroundImage:[UIImage imageNamed:@"RegButton"] forState:UIControlStateNormal];
     [vkRegistration addTarget:self action:@selector(vkRegistration) forControlEvents:UIControlEventTouchDown];
     
     self.phoneNumber = [[UITextField alloc] init];
     [self.phoneNumber setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.phoneNumber setPlaceholder:@"Номер телефона"];
+    [self.phoneNumber setPlaceholder:[@"phoneNumberText" localized]];
     
     self.password = [[UITextField alloc] init];
     [self.password setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.password setPlaceholder:@"Пароль"];
+    [self.password setPlaceholder:[@"passwordText" localized]];
     
-    UIImageView *header = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Header@2x.png"]];
+    UIImageView *header = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Header"]];
     header.contentMode = UIViewContentModeScaleToFill;
     UILabel *helloLable = [[UILabel alloc] init];
     helloLable.textColor = [UIColor whiteColor];
-    helloLable.text = @"Добро пожаловать";
+    helloLable.text = [@"headerText" localized];
     
     [self.view addSubview:self.phoneNumber];
     [self.view addSubview:self.password];
@@ -170,13 +161,23 @@ static NSArray *SCOPE = nil;
 }
 
 - (void) vkLoginButtonClicked   {
-    self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
-    self.webView.delegate = self;
-    NSString *stringUrl = [NSString stringWithFormat:@"http://oauth.vk.com/authorize?client_id=5187957&scope=%@&redirect_uri=oauth.vk.com/blank.html&display=touch&response_type=token", [SCOPE componentsJoinedByString:@","]];
-    NSURL *url = [NSURL URLWithString:stringUrl];
-    //[self.view addSubview:self.webView];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
-    [VKSdk authorize:SCOPE];
+    [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
+        if (state == VKAuthorizationAuthorized) {
+            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+            [self presentViewController:navController animated:YES completion:NULL];
+        } else if (error) {
+            NSLog(@"Error:%@", error);
+        } else {
+            self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
+            self.webView.delegate = self;
+            NSString *stringUrl = [NSString stringWithFormat:@"http://oauth.vk.com/authorize?client_id=5187957&scope=%@&redirect_uri=oauth.vk.com/blank.html&display=touch&response_type=token", [SCOPE componentsJoinedByString:@","]];
+            NSURL *url = [NSURL URLWithString:stringUrl];
+            //[self.view addSubview:self.webView];
+            [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+            [VKSdk authorize:SCOPE];
+        }
+    }];
 }
 -(void) webViewDidFinishLoad:(UIWebView *)webView {
     NSString *currentURL = self.webView.request.URL.absoluteString;

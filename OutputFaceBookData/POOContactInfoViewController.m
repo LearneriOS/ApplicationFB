@@ -9,8 +9,8 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMessageComposeViewController.h>
 #import "POOContactInfoViewController.h"
-
-static NSInteger INDENT = 20;
+#import "Consts.h"
+#import "StringLocalizer.h"
 
 @interface POOContactInfoViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
@@ -23,9 +23,9 @@ static NSInteger INDENT = 20;
 @implementation POOContactInfoViewController
 
 - (POOContactInfoViewController *)initWithName:(NSString *)name lastName:(NSString *)lastName phones:(NSDictionary *)phones {
-    _name = name;
-    _lastName = lastName;
-    _phones = phones;
+    self.name = name;
+    self.lastName = lastName;
+    self.phones = phones;
     
     return self;
 }
@@ -33,8 +33,8 @@ static NSInteger INDENT = 20;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed: @"Background@2x.png"]]];
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"Header_black@2x.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0) resizingMode:UIImageResizingModeStretch] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed: @"Background"]]];
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"Header_black"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0) resizingMode:UIImageResizingModeStretch] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
     
     [self creatUI];
 }
@@ -75,13 +75,13 @@ static NSInteger INDENT = 20;
 #pragma - UI
 - (void)creatUI {
     UIImageView *imageView = [[UIImageView alloc] init];
-    [imageView setImage:[UIImage imageNamed:@"placeholder.jpg"]];
+    [imageView setImage:[UIImage imageNamed:@"Placeholder"]];
     
     UILabel *nameLable = [[UILabel alloc] init];
     [nameLable setText:[NSString stringWithFormat:@"%@ %@",_name, _lastName]];
     
     UIButton *sendMessage = [UIButton buttonWithType:UIButtonTypeSystem];
-    [sendMessage setTitle:@"Отправить сообщение" forState:UIControlStateNormal];
+    [sendMessage setTitle:[@"sendMessageText" localized] forState:UIControlStateNormal];
     [sendMessage setBackgroundColor:[UIColor whiteColor]];
     [sendMessage addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchDown];
     
@@ -115,24 +115,24 @@ static NSInteger INDENT = 20;
         sendMessegeButton.translatesAutoresizingMaskIntoConstraints = NO;
         tableView.translatesAutoresizingMaskIntoConstraints = NO;
         // imageView Constraint
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:kConstsIndent]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:kConstsIndent]];
         // lable Constraint
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:nameLable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:INDENT + INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:nameLable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:kConstsIndent + kConstsIndent]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:nameLable attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeTrailing multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:nameLable attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:imageView attribute:NSLayoutAttributeTrailing multiplier:1 constant:kConstsIndent]];
         // sendMessegeButton Constraint
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:sendMessegeButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:INDENT * 7]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:sendMessegeButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:kConstsIndent * 7]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:sendMessegeButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:sendMessegeButton attribute:NSLayoutAttributeTrailing multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:sendMessegeButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:kConstsIndent]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:sendMessegeButton attribute:NSLayoutAttributeTrailing multiplier:1 constant:kConstsIndent]];
         // tableView Contstarins
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:sendMessegeButton attribute:NSLayoutAttributeBottom multiplier:1 constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:tableView attribute:NSLayoutAttributeBottom multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:sendMessegeButton attribute:NSLayoutAttributeBottom multiplier:1 constant:kConstsIndent]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:tableView attribute:NSLayoutAttributeBottom multiplier:1 constant:kConstsIndent]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:INDENT]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:tableView attribute:NSLayoutAttributeTrailing multiplier:1 constant:INDENT]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:kConstsIndent]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:tableView attribute:NSLayoutAttributeTrailing multiplier:1 constant:kConstsIndent]];
     }
 }
 
