@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  OutputFaceBookData
+
+  Created by Oleh Petrunko on 09.02.16.
+  Copyright © 2016 Oleh Petrunko. All rights reserved.
+*/
+
+// POOFacebookData
+"facebookLoginButtonText" = "Войти в Facebook";
+"vkLoginButtonText" = "Войти в VK";
+"vkRegistrationText" = "Зарегестрироваться в вк";
+"phoneNumberText" = "Номер телефона";
+"passwordText" = "Пароль";
+"headerText" = "Добро пожаловать";
+
+// POORegistrationViewController
+"navigationController.navigationBar.topItem.titleText" = "Регистрация";
+"phoneErrorText1" = "Неверный номер телефона";
+"phoneErrorText2" = "Номер занят друшим пользователем";
+"phoneErrorText3" = "Введен не верный номер телефона";
+"phoneErrorText4" = "Не все поля были заполнены";
+"passwordConfirmationText" = "Введите Пароль";
+"textField.placeholderText" = "Пароль подтверждения регистрации";
+"alertControllerOKText" = "Регистрация прошла успешно";
+"alertControllerNotOKText" = "Неправильный пароль";
+"firstNameText" = "Имя";
+"lastNameText" = "Фамилия";
+"phoneText" = "Номер телефона";
+"passwordText" = "Пароль";
+"registrationButtonText" = "Зарегистрироваться";
+
+// POOContactInfoViewController
+"sendMessageText" = "Send Message";
+
+// POOLogInVKViewController
+"segmentControllerContactText" = " Контакты";
+"segmentControllerFriendsText" = "Друзья";
+"segmentControllerInvitesText" = "Заявки";
