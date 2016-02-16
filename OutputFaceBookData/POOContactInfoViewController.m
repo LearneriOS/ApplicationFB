@@ -121,13 +121,17 @@
 
 - (void) sendMessage {
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"device doesn't support SMS!" preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    [alertController addAction:ok];
-    
-    [self presentViewController:alertController animated:NO completion:NULL];
+    if(![MFMessageComposeViewController canSendText]) {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"device doesn't support SMS!" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alertController addAction:ok];
+        
+        [self presentViewController:alertController animated:NO completion:NULL];
+    }
 }
 
 - (void) messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
