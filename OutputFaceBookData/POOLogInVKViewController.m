@@ -130,27 +130,29 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
     NSString *stringFriendsRequest2 = [NSString
                                        stringWithFormat:@"https://api.vk.com/method/friends.getRequests?extended=1&need_mutual=1&out=1&access_token=%@&sig=%@",
                                        _userToken, md5];
-    
+    //TODO:fix
     [self doRequestByStringWithBlock:stringFriendsRequest2 block:^(NSUInteger code, NSDictionary *response, NSError *error) {
-        for (NSDictionary *userId in response) {
-            
-            NSString *stringFriendsRequest = [NSString
-                                              stringWithFormat:@"http://api.vk.com/method/users.get?user_id=%@&order=hints&fields=online,photo_100",
-                                              [userId objectForKey:@"uid"]];
-            
-            [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSUInteger code, NSDictionary *response, NSError *error) {
-                if (response != nil) {
-                    
-                    for (NSDictionary *inviter in response) {
+        if (response != nil) {
+            for (NSDictionary *userId in response) {
+                
+                NSString *stringFriendsRequest = [NSString
+                                                  stringWithFormat:@"http://api.vk.com/method/users.get?user_id=%@&order=hints&fields=online,photo_100",
+                                                  [userId objectForKey:@"uid"]];
+                //TODO:fix
+                [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSUInteger code, NSDictionary *response, NSError *error) {
+                    if (response != nil) {
                         
-                        POOVKUserModel *vkUser = [[POOVKUserModel alloc] initWithDictionary:inviter];
-                        [_invates addObject:vkUser];
+                        for (NSDictionary *inviter in response) {
+                            
+                            POOVKUserModel *vkUser = [[POOVKUserModel alloc] initWithDictionary:inviter];
+                            [_invates addObject:vkUser];
+                        }
+                    } else {
+                        
+                        //TODO:make some code
                     }
-                } else {
-                    
-                    //TODO:make some code
-                }
-            }];
+                }];
+            }
         }
     }];
 }

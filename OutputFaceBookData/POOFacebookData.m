@@ -34,7 +34,7 @@ static NSArray *SCOPE = nil;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]];
     [self creatLoginButtotAndAddToSubView];
-    //[VKSdk forceLogout];
+    [VKSdk forceLogout];
     SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
     [[VKSdk initializeWithAppId:@"5187957"] registerDelegate:self];
     [[VKSdk instance] setUiDelegate:self];
