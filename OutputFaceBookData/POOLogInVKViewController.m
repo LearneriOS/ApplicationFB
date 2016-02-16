@@ -15,6 +15,7 @@
 #import "POOContactInfoViewController.h"
 #import "String+Md5.h"
 #import "StringLocalizer.h"
+#import "POOVKTableViewCell.h"
 
 typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSError *error);
 
@@ -256,10 +257,10 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
     static NSString *MyIdentifier = @"identefire_name";
     
     if (_segmentController.selectedSegmentIndex == 0) {
-        POOTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        POOVKTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         
         if (cell == nil) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"POOTableViewCell" owner:self options:nil];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"POOVKTableViewCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
         }
         NSString *curentKey = [_sectionSource objectAtIndex:indexPath.section];
@@ -272,10 +273,10 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
     }
 
     if (_segmentController.selectedSegmentIndex == 1 || _segmentController.selectedSegmentIndex == 2) {
-        POOTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        POOVKTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         
         if (cell == nil) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"POOTableViewCell" owner:self options:nil];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"POOVKTableViewCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
         }
         NSString *curentKey = [_sectionSource objectAtIndex:indexPath.section];

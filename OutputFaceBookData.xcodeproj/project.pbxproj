@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5791B2D5C26160ED45146CA2 /* Pods_OutputFaceBookData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040808CE55AAAB5B51A2F /* Pods_OutputFaceBookData.framework */; };
 		D20749521C206AEC00A6EB2A /* POORegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */; };
+		D21623B11C737281000306EC /* POOVKTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D21623AF1C737281000306EC /* POOVKTableViewCell.m */; };
+		D21623B21C737281000306EC /* POOVKTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D21623B01C737281000306EC /* POOVKTableViewCell.xib */; };
 		D225FB851BDA398900711C53 /* POOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D225FB841BDA398900711C53 /* POOCache.m */; };
 		D225FB8A1BDA6CE100711C53 /* String+Md5.m in Sources */ = {isa = PBXBuildFile; fileRef = D225FB891BDA6CE100711C53 /* String+Md5.m */; };
 		D24BAD2C1BE7B1BF003C96A9 /* POOFacebookFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAD2B1BE7B1BF003C96A9 /* POOFacebookFeed.m */; };
@@ -52,6 +54,9 @@
 		D20749471C20365E00A6EB2A /* VK_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VK_ios_sdk.framework; path = "Pods/../build/Debug-iphoneos/VK_ios_sdk.framework"; sourceTree = "<group>"; };
 		D20749501C206AEC00A6EB2A /* POORegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POORegistrationViewController.h; sourceTree = "<group>"; };
 		D20749511C206AEC00A6EB2A /* POORegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POORegistrationViewController.m; sourceTree = "<group>"; };
+		D21623AE1C737281000306EC /* POOVKTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOVKTableViewCell.h; sourceTree = "<group>"; };
+		D21623AF1C737281000306EC /* POOVKTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOVKTableViewCell.m; sourceTree = "<group>"; };
+		D21623B01C737281000306EC /* POOVKTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POOVKTableViewCell.xib; sourceTree = "<group>"; };
 		D225FB831BDA398900711C53 /* POOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOCache.h; sourceTree = "<group>"; };
 		D225FB841BDA398900711C53 /* POOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOCache.m; sourceTree = "<group>"; };
 		D225FB881BDA6CE100711C53 /* String+Md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "String+Md5.h"; sourceTree = "<group>"; };
@@ -212,6 +217,9 @@
 		D2840F1E1C53F41B002AB1E9 /* VKCell */ = {
 			isa = PBXGroup;
 			children = (
+				D21623AE1C737281000306EC /* POOVKTableViewCell.h */,
+				D21623AF1C737281000306EC /* POOVKTableViewCell.m */,
+				D21623B01C737281000306EC /* POOVKTableViewCell.xib */,
 			);
 			name = VKCell;
 			sourceTree = "<group>";
@@ -398,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2A8CBB31BC7A62C006BF1F6 /* LaunchScreen.storyboard in Resources */,
+				D21623B21C737281000306EC /* POOVKTableViewCell.xib in Resources */,
 				D2FE07CC1BD4E6B7004E0C95 /* POOCollectionViewCell.xib in Resources */,
 				D2587DBE1C6A22AD006FAB08 /* Assets.xcassets in Resources */,
 				D26C192A1C6A3D39007B3CB4 /* Localizable.strings in Resources */,
@@ -469,6 +478,7 @@
 				D293A21A1C47D23C00EDDF59 /* POOVKUserModel.m in Sources */,
 				D2587DC11C6A2434006FAB08 /* StringLocalizer.m in Sources */,
 				D2A8CBDF1BC7CD9A006BF1F6 /* POFriendsListViewController.m in Sources */,
+				D21623B11C737281000306EC /* POOVKTableViewCell.m in Sources */,
 				D2A8CBA81BC7A62C006BF1F6 /* AppDelegate.m in Sources */,
 				D293A2131C47D0A300EDDF59 /* POOLogInVKViewController.m in Sources */,
 				D225FB851BDA398900711C53 /* POOCache.m in Sources */,
