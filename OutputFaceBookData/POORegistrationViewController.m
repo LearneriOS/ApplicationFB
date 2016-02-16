@@ -10,7 +10,7 @@
 #import "Consts.h"
 #import "StringLocalizer.h"
 
-typedef void (^CompletionHandler)(NSString *response, NSError *error);
+typedef void (^CompletionHandler)(NSUInteger response, NSError *error);
 
 @interface POORegistrationViewController ()
 
@@ -38,27 +38,27 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
 - (void) vkRegistration {
     NSString *checkPhoneRequest = [NSString stringWithFormat: @"https://api.vk.com/method/auth.checkPhone?phone=%@&client_id=%@&client_secret=%@",self.phone.text, kConstsAppId, kConstsSecret];
     
-    [self doRequestByStringWithBlock:checkPhoneRequest block:^(NSString *response, NSError *error) {
+    [self doRequestByStringWithBlock:checkPhoneRequest block:^(NSUInteger code, NSError *error) {
         
-        if ([response integerValue] == 1 && ![self.firstName.text  isEqual: @""] && ![self.lastName.text  isEqual: @""] && ![self.password.text  isEqual: @""]) {
+        if (code  == 1 && ![self.firstName.text  isEqual: @""] && ![self.lastName.text  isEqual: @""] && ![self.password.text  isEqual: @""]) {
             NSString *authorizationRequest = [NSString stringWithFormat:@"https://api.vk.com/method/auth.signup?first_name=%@&last_name=%@&client_id=%@&client_secret=%@&phone=%@&password=%@&test_mode=1",self.firstName.text, self.lastName.text, kConstsAppId, kConstsSecret, self.phone.text, self.password.text];
             [self doRequestByString:authorizationRequest];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self creatConfirmWindow];
             });
-        } else if([response integerValue] == 1000) {
+        } else if(code == 1000) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.phone.text = nil;
                 UIColor *color = [UIColor redColor];
                 self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[@"phoneErrorText1" localized] attributes:@{NSForegroundColorAttributeName: color}];
             });
-        } else if([response integerValue] == 1004) {
+        } else if(code == 1004) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.phone.text = nil;
                 UIColor *color = [UIColor redColor];
                 self.phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[@"phoneErrorText2" localized] attributes:@{NSForegroundColorAttributeName: color}];
             });
-        } else if ([response integerValue] == 100) {
+        } else if (code == 100) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.phone.text = nil;
                 UIColor *color = [UIColor redColor];
@@ -80,8 +80,8 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
 
     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         NSString *confirmationRegistration = [NSString stringWithFormat:@"https://api.vk.com/method/auth.confirm?client_id=%@&client_secret=%@&phone=%@&code=%@&test_mode=1",kConstsAppId, kConstsSecret, self.phone.text, self.confimPassword.text];
-        [self doRequestByStringWithBlock:confirmationRegistration block:^(NSString *response, NSError *error) {
-            [self buildAllertControllerWithFlag:[response integerValue]];
+        [self doRequestByStringWithBlock:confirmationRegistration block:^(NSUInteger code, NSError *error) {
+            [self buildAllertControllerWithFlag:code];
         }];
     }];
     
@@ -137,25 +137,30 @@ typedef void (^CompletionHandler)(NSString *response, NSError *error);
     [dataTask resume];
 }
 
-- (void) doRequestByStringWithBlock:(NSString *)stringRequest block:(void (^)(NSString *response, NSError *error))completionHandler {
+- (void) doRequestByStringWithBlock:(NSString *)stringRequest block:(CompletionHandler)completionHandler {
     NSURL *chekPhoneURL = [NSURL URLWithString:stringRequest];
     NSURLRequest *checkPhoneRequest = [NSURLRequest requestWithURL:chekPhoneURL];
     
     NSURLSessionDataTask *checkPhoneDataTask = [[NSURLSession sharedSession] dataTaskWithRequest:checkPhoneRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (completionHandler) {
             if (error) {
-                completionHandler(nil,error);
+                completionHandler(0, error);
             } else {
                 NSError *jsonError;
                 NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
                 if(jsonError) {
                     NSLog(@"json error : %@", [jsonError localizedDescription]);
                 } else if([jsonDictionary objectForKey:@"response"]) {
-                    completionHandler([jsonDictionary objectForKey:@"response"], jsonError);
+                    id responsId = [jsonDictionary objectForKey:@"response"];
+                    
+                    if ([responsId isKindOfClass:[NSNumber class]]) {
+                        
+                        completionHandler(((NSNumber *)responsId).integerValue, jsonError);
+                    }
                 } else {
-                    completionHandler([[jsonDictionary objectForKey:@"error"] objectForKey:@"error_code"], jsonError);
+                    completionHandler(0, jsonError);
                 }
-                NSLog(@"%@",jsonDictionary);
+                NSLog(@"%@", jsonDictionary);
             }
         }
     }];

@@ -185,6 +185,7 @@ static NSArray *SCOPE = nil;
     NSRange textRange =[[currentURL lowercaseString] rangeOfString:[@"access_token" lowercaseString]];
     if(textRange.location != NSNotFound) {
         NSArray* data = [currentURL componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"=&"]];
+        NSLog(@"%@",data);
         
         [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:1] forKey:@"access_token"];
         [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:3] forKey:@"expires_in"];

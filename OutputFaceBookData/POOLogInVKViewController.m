@@ -16,7 +16,7 @@
 #import "String+Md5.h"
 #import "StringLocalizer.h"
 
-typedef void (^CompletionHandler)(NSDictionary *response, NSError *error);
+typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSError *error);
 
 @interface POOLogInVKViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
 
@@ -130,16 +130,24 @@ typedef void (^CompletionHandler)(NSDictionary *response, NSError *error);
                                        stringWithFormat:@"https://api.vk.com/method/friends.getRequests?extended=1&need_mutual=1&out=1&access_token=%@&sig=%@",
                                        _userToken, md5];
     
-    [self doRequestByStringWithBlock:stringFriendsRequest2 block:^(NSDictionary *response, NSError *error) {
+    [self doRequestByStringWithBlock:stringFriendsRequest2 block:^(NSUInteger code, NSDictionary *response, NSError *error) {
         for (NSDictionary *userId in response) {
+            
             NSString *stringFriendsRequest = [NSString
                                               stringWithFormat:@"http://api.vk.com/method/users.get?user_id=%@&order=hints&fields=online,photo_100",
                                               [userId objectForKey:@"uid"]];
             
-            [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSDictionary *response, NSError *error) {
-                for (NSDictionary *inviter in response) {
-                    POOVKUserModel *vkUser = [[POOVKUserModel alloc] initWithDictionary:inviter];
-                    [_invates addObject:vkUser];
+            [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSUInteger code, NSDictionary *response, NSError *error) {
+                if (response != nil) {
+                    
+                    for (NSDictionary *inviter in response) {
+                        
+                        POOVKUserModel *vkUser = [[POOVKUserModel alloc] initWithDictionary:inviter];
+                        [_invates addObject:vkUser];
+                    }
+                } else {
+                    
+                    //TODO:make some code
                 }
             }];
         }
@@ -172,32 +180,50 @@ typedef void (^CompletionHandler)(NSDictionary *response, NSError *error);
                                       stringWithFormat:@"http://api.vk.com/method/friends.get?user_id=%@&order=hints&fields=online,photo_100",
                                       _userId];
     
-    [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSDictionary *response, NSError *error) {
-        for (NSDictionary *user in response) {
-            POOVKUserModel *userModel = [[POOVKUserModel alloc] initWithDictionary:user];
-            [_friends addObject:userModel];
+    [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSUInteger code, NSDictionary *response, NSError *error) {
+        if (response != nil) {
+            
+            for (NSDictionary *user in response) {
+                
+                POOVKUserModel *userModel = [[POOVKUserModel alloc] initWithDictionary:user];
+                [_friends addObject:userModel];
+            }
+        } else {
+            
+            //TODO:make some code
         }
     }];
 }
 
 #pragma mark - Request
-- (void)doRequestByStringWithBlock:(NSString *)stringRequest block:(void (^)(NSDictionary *response, NSError *error))completionHandler {
+- (void)doRequestByStringWithBlock:(NSString *)stringRequest block:(CompletionHandler)completionHandler {
     NSURL *chekPhoneURL = [NSURL URLWithString:stringRequest];
     NSURLRequest *checkPhoneRequest = [NSURLRequest requestWithURL:chekPhoneURL];
     
     NSURLSessionDataTask *checkPhoneDataTask = [[NSURLSession sharedSession] dataTaskWithRequest:checkPhoneRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (completionHandler) {
             if (error) {
-                completionHandler(nil,error);
+                completionHandler(0, nil, error);
             } else {
                 NSError *jsonError;
                 NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
                 if(jsonError) {
                     NSLog(@"json error : %@", [jsonError localizedDescription]);
+                    id idRespons = [jsonDictionary objectForKey:@"response"];
+                    if ([idRespons isKindOfClass:[NSNumber class]]) {
+                        
+                        completionHandler(((NSNumber *) idRespons).integerValue, nil, jsonError);
+                    }
                 } else if([jsonDictionary objectForKey:@"response"]) {
-                    completionHandler([jsonDictionary objectForKey:@"response"], jsonError);
+                    id idRespons = [jsonDictionary objectForKey:@"response"];
+                    if ([idRespons isKindOfClass:[NSNumber class]]) {
+                        
+                        completionHandler(((NSNumber *) idRespons).integerValue, nil, nil);
+                    } else {
+                        completionHandler(0, [jsonDictionary objectForKey:@"response"], nil);
+                    }
                 } else {
-                    completionHandler([[jsonDictionary objectForKey:@"error"] objectForKey:@"error_code"], jsonError);
+                    completionHandler(0, [[jsonDictionary objectForKey:@"error"] objectForKey:@"error_code"], jsonError);
                 }
             }
         }

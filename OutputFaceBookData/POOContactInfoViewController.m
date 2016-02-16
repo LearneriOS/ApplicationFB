@@ -12,7 +12,7 @@
 #import "Consts.h"
 #import "StringLocalizer.h"
 
-@interface POOContactInfoViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+@interface POOContactInfoViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *lastName;
@@ -70,6 +70,28 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSString *curentKey = [_phones.allKeys objectAtIndex:indexPath.section];
+    [self ShowSMS:[_phones objectForKey:curentKey]];
+}
+
+- (void) ShowSMS:(NSString *) phone {
+    
+    if(![MFMessageComposeViewController canSendText]) {
+        
+        NSLog(@"device doesn't support SMS!");
+        return;
+    }
+    
+    NSArray *recipents = @[phone];
+    NSString *message = [NSString stringWithFormat:@"Some Text"];
+    
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.messageComposeDelegate = self;
+    [messageController setRecipients:recipents];
+    [messageController setBody:message];
+    
+    // Present message view controller on screen
+    [self presentViewController:messageController animated:YES completion:nil];
 }
 
 #pragma - UI
@@ -98,13 +120,41 @@
 }
 
 - (void) sendMessage {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Заглушка" message:@"Реализовать отправку сообщений" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"device doesn't support SMS!" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
     }];
     [alertController addAction:ok];
     
     [self presentViewController:alertController animated:NO completion:NULL];
+}
+
+- (void) messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"Failed to send SMS!" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    
+    [alertController addAction:ok];
+    
+    switch (result) {
+        case MessageComposeResultCancelled:
+            break;
+           
+        case MessageComposeResultSent:
+            break;
+            
+        case MessageComposeResultFailed:
+            [self presentViewController:alertController animated:YES completion:NULL];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Constrains
@@ -135,6 +185,8 @@
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:tableView attribute:NSLayoutAttributeTrailing multiplier:1 constant:kConstsIndent]];
     }
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
