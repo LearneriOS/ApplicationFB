@@ -13,16 +13,13 @@
 #import "POOLogInVKViewController.h"
 #import "vkSdk.h"
 #import "StringLocalizer.h"
+#import "Consts.h"
 
 static NSArray *SCOPE = nil;
 
 @interface POOFacebookData () <VKSdkDelegate, VKSdkUIDelegate, UIWebViewDelegate>
 
 @property (nonatomic, strong) NSArray *friends;
-@property (nonatomic, strong) UIWebView *webView;
-
-@property (nonatomic, assign) BOOL authorized;
-
 
 @end
 
@@ -32,7 +29,8 @@ static NSArray *SCOPE = nil;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]];
     [self creatLoginButtotAndAddToSubView];
-    [VKSdk forceLogout];
+    
+    //[VKSdk forceLogout];
     SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
     [[VKSdk initializeWithAppId:@"5187957"] registerDelegate:self];
     [[VKSdk instance] setUiDelegate:self];
@@ -153,45 +151,13 @@ static NSArray *SCOPE = nil;
     [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
         if (state == VKAuthorizationAuthorized) {
             
-//            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-//            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-//            [self presentViewController:navController animated:YES completion:NULL];
+            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+            [self presentViewController:navController animated:YES completion:NULL];
         } else {
-            
-            self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
-            self.webView.delegate = self;
-            
-            NSString *stringUrl = [NSString stringWithFormat:@"http://oauth.vk.com/authorize?client_id=5187957&scope=%@&redirect_uri=oauth.vk.com/blank.html&display=touch&response_type=token", [SCOPE componentsJoinedByString:@","]];
-            
-            NSURL *url = [NSURL URLWithString:stringUrl];
-            [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
-            
             [VKSdk authorize:SCOPE];
-            
-            [self.view addSubview:_webView];
         }
     }];
-}
--(void) webViewDidFinishLoad:(UIWebView *)webView {
-    NSString *currentURL = self.webView.request.URL.absoluteString;
-    NSLog(@"%@",currentURL);
-    NSRange textRange =[[currentURL lowercaseString] rangeOfString:[@"access_token" lowercaseString]];
-    if(textRange.location != NSNotFound) {
-        NSArray* data = [currentURL componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"=&"]];
-        NSLog(@"%@",data);
-        
-        [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:1] forKey:@"access_token"];
-        [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:3] forKey:@"expires_in"];
-        [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:5] forKey:@"user_id"];
-        [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:7] forKey:@"secret"];
-        
-        [self dismissViewControllerAnimated:NO completion:NULL];
-        
-        POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        [self presentViewController:navController animated:YES completion:NULL];
-        
-    }
 }
 
 #pragma mark - Constraints
@@ -272,6 +238,15 @@ static NSArray *SCOPE = nil;
 - (void) vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result {
     if (result.token) {
         
+        [[NSUserDefaults standardUserDefaults] setObject:result.token.accessToken forKey:kConstsTokenKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:result.token.expiresIn] forKey:kConstsExpiresInKey];
+        [[NSUserDefaults standardUserDefaults] setObject:result.user.id forKey:kConstsUserIdKey];
+        [[NSUserDefaults standardUserDefaults] setObject:result.token.secret forKey:kConstsVkSecretKey];
+        
+        POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+        
+        [self presentViewController:navController animated:YES completion:NULL];
     }
      if (result.error) {
         NSLog(@"Error:%@",result.error);
@@ -283,7 +258,7 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller {
-    //[self presentViewController:controller animated:YES completion:NULL];
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)vkSdkNeedCaptchaEnter:(VKError *)captchaError {

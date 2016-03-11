@@ -22,14 +22,16 @@
 		<string>fb-messenger-platform-20150128</string>
 		<string>fb-messenger-platform-20150218</string>
 		<string>fb-messenger-platform-20150305</string>
-        <string>vk</string>
-        <string>vkauthorize</string>
+		<string>vk</string>
+		<string>vkauthorize</string>
 	</array>
 	<key>CFBundleTypeRole</key>
 	<string>Editor</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLName</key>
+			<string>vk5187957</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>vk5187957</string>

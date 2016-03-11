@@ -16,6 +16,7 @@
 #import "String+Md5.h"
 #import "StringLocalizer.h"
 #import "POOVKTableViewCell.h"
+#import "Consts.h"
 
 typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSError *error);
 
@@ -42,8 +43,8 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
 - (instancetype) init {
     self = [super init];
     if (self != nil) {
-        self.userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
-        self.userToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"];
+        self.userId = [[NSUserDefaults standardUserDefaults] objectForKey:kConstsUserIdKey];
+        self.userToken = [[NSUserDefaults standardUserDefaults] objectForKey:kConstsTokenKey];
         self.groupOfContact = [[NSMutableArray alloc] init];
         self.friends = [[NSMutableArray alloc] init];
         self.namesBySection = [[NSMutableDictionary alloc] init];
