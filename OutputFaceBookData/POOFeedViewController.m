@@ -94,9 +94,9 @@ static CGFloat const kCollectionViewControllerSpace = 5.f;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    [collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([POOCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([UICollectionViewCell class])];
+    [collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([POOCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([POOCollectionViewCell class])];
     
-    POOCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"UICollectionViewCell" forIndexPath:indexPath];
+    POOCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([POOCollectionViewCell class]) forIndexPath:indexPath];
     
     POOFacebookFeed *feed = [self.feeds objectAtIndex:numberOfElementInCollection];
     

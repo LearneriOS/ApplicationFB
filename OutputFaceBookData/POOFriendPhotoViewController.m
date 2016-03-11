@@ -58,9 +58,8 @@ static CGFloat const kCollectionViewControllerSpace = 5.f;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *reuseIdentifier = @"POOCollectionViewCell";
     
-    POOCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    POOCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([POOCollectionViewCell class]) forIndexPath:indexPath];
     
     POOTESTFriend *friend = [self.friendsPhoro objectAtIndex:indexPath.row];
     [cell configureWithThumbnailUrl:friend.thumpnailUrl];
