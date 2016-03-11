@@ -187,11 +187,6 @@ typedef void (^CompletionHandler)(NSUInteger response, NSError *error);
     [self.password setPlaceholder:[@"passwordText" localized]];
     self.password.secureTextEntry = YES;
     
-    //    self.repeatPassword = [[UITextField alloc] init];
-    //    [self.repeatPassword setBorderStyle:UITextBorderStyleRoundedRect];
-    //    [self.repeatPassword setPlaceholder:@"Повторите пароль"];
-    //    self.repeatPassword.secureTextEntry = YES;
-    
     UIButton *registrationButton = [UIButton new];
     [registrationButton setTitle:[@"registrationButtonText" localized] forState:UIControlStateNormal];
     registrationButton.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;

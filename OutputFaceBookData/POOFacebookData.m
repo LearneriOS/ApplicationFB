@@ -20,8 +20,6 @@ static NSArray *SCOPE = nil;
 
 @property (nonatomic, strong) NSArray *friends;
 @property (nonatomic, strong) UIWebView *webView;
-@property (nonatomic, strong) UITextField *phoneNumber;
-@property (nonatomic, strong) UITextField *password;
 
 @property (nonatomic, assign) BOOL authorized;
 
@@ -129,29 +127,19 @@ static NSArray *SCOPE = nil;
     [vkRegistration setBackgroundImage:[UIImage imageNamed:@"RegButton"] forState:UIControlStateNormal];
     [vkRegistration addTarget:self action:@selector(vkRegistration) forControlEvents:UIControlEventTouchDown];
     
-    self.phoneNumber = [[UITextField alloc] init];
-    [self.phoneNumber setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.phoneNumber setPlaceholder:[@"phoneNumberText" localized]];
-    
-    self.password = [[UITextField alloc] init];
-    [self.password setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.password setPlaceholder:[@"passwordText" localized]];
-    
     UIImageView *header = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Header"]];
     header.contentMode = UIViewContentModeScaleToFill;
     UILabel *helloLable = [[UILabel alloc] init];
     helloLable.textColor = [UIColor whiteColor];
     helloLable.text = [@"headerText" localized];
     
-    [self.view addSubview:self.phoneNumber];
-    [self.view addSubview:self.password];
     [self.view addSubview:facebookLoginButton];
     [self.view addSubview:vkLoginButton];
     [self.view addSubview:vkRegistration];
     [self.view addSubview:header];
     [self.view addSubview:helloLable];
     
-    [self creatConstraints:self.phoneNumber password:self.password facebookButton:facebookLoginButton vkButton:vkLoginButton header:header helloLable:helloLable vkRegistration:vkRegistration];
+    [self creatConstraints:facebookLoginButton vkButton:vkLoginButton header:header helloLable:helloLable vkRegistration:vkRegistration];
 }
 #pragma mark - VK buttons
 - (void) vkRegistration {
@@ -161,21 +149,26 @@ static NSArray *SCOPE = nil;
 }
 
 - (void) vkLoginButtonClicked   {
+    
     [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
         if (state == VKAuthorizationAuthorized) {
-            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-            [self presentViewController:navController animated:YES completion:NULL];
-        } else if (error) {
-            NSLog(@"Error:%@", error);
+            
+//            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
+//            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+//            [self presentViewController:navController animated:YES completion:NULL];
         } else {
+            
             self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
             self.webView.delegate = self;
+            
             NSString *stringUrl = [NSString stringWithFormat:@"http://oauth.vk.com/authorize?client_id=5187957&scope=%@&redirect_uri=oauth.vk.com/blank.html&display=touch&response_type=token", [SCOPE componentsJoinedByString:@","]];
+            
             NSURL *url = [NSURL URLWithString:stringUrl];
-            //[self.view addSubview:self.webView];
             [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+            
             [VKSdk authorize:SCOPE];
+            
+            [self.view addSubview:_webView];
         }
     }];
 }
@@ -191,51 +184,74 @@ static NSArray *SCOPE = nil;
         [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:3] forKey:@"expires_in"];
         [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:5] forKey:@"user_id"];
         [[NSUserDefaults standardUserDefaults] setObject:[data objectAtIndex:7] forKey:@"secret"];
+        
+        [self dismissViewControllerAnimated:NO completion:NULL];
+        
+        POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+        [self presentViewController:navController animated:YES completion:NULL];
+        
     }
-    
-    [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
-        if (state == VKAuthorizationAuthorized) {
-            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-            [self presentViewController:navController animated:YES completion:NULL];
-        } else if (error) {
-            NSLog(@"Error:%@", error);
-        }
-    }];
 }
 
 #pragma mark - Constraints
-- (void) creatConstraints:(UITextField *)phoneNumber password:(UITextField *)password facebookButton:(UIButton *)facebookButton vkButton:(UIButton *)vkButton header:(UIImageView *)header helloLable:(UILabel *) lable vkRegistration:(UIButton *)vkRegistration   {
+- (void) creatConstraints:(UIButton *)facebookButton vkButton:(UIButton *)vkButton header:(UIImageView *)header helloLable:(UILabel *) lable vkRegistration:(UIButton *)vkRegistration   {
     
     if (self.view.constraints.count == 0) {
+        
         facebookButton.translatesAutoresizingMaskIntoConstraints = NO;
-        phoneNumber.translatesAutoresizingMaskIntoConstraints = NO;
-        password.translatesAutoresizingMaskIntoConstraints = NO;
         vkButton.translatesAutoresizingMaskIntoConstraints = NO;
         header.translatesAutoresizingMaskIntoConstraints = NO;
         lable.translatesAutoresizingMaskIntoConstraints = NO;
         vkRegistration.translatesAutoresizingMaskIntoConstraints = NO;
-        //phoneNumber
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneNumber attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:100]];
+        //VK Vutton
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneNumber attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:50]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:phoneNumber attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:50]];
-        //password
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:phoneNumber attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:password attribute:NSLayoutAttributeTop multiplier:1.0f constant:0]];
+        [self.view addConstraint:[NSLayoutConstraint
+                                  constraintWithItem:vkButton
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                                  attribute:NSLayoutAttributeTop
+                                  multiplier:1 constant:100]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:password attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:50]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:password attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:50]];
-        //VK Button
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:vkButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:password attribute:NSLayoutAttributeBottom multiplier:1.0f constant:20]];
-        
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:vkButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:50]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:vkButton attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:50]];
+        [self.view addConstraint:[NSLayoutConstraint
+                                  constraintWithItem:vkButton
+                                  attribute:NSLayoutAttributeLeading
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                                  attribute:NSLayoutAttributeLeading
+                                  multiplier:1.0f constant:50]];
+        [self.view addConstraint:[NSLayoutConstraint
+                                  constraintWithItem:self.view
+                                  attribute:NSLayoutAttributeTrailing
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:vkButton
+                                  attribute:NSLayoutAttributeTrailing
+                                  multiplier:1.0f constant:50]];
         
         //Facebook button
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:facebookButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:vkButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:5]];
+        [self.view addConstraint:[NSLayoutConstraint
+                                  constraintWithItem:facebookButton
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:vkButton
+                                  attribute:NSLayoutAttributeBottom
+                                  multiplier:1.0f constant:5]];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:facebookButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:50]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:facebookButton attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:50]];
+        [self.view addConstraint:[NSLayoutConstraint
+                                  constraintWithItem:facebookButton
+                                  attribute:NSLayoutAttributeLeading
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                                  attribute:NSLayoutAttributeLeading
+                                  multiplier:1.0f constant:50]];
+        [self.view addConstraint:[NSLayoutConstraint
+                                  constraintWithItem:self.view
+                                  attribute:NSLayoutAttributeTrailing
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:facebookButton
+                                  attribute:NSLayoutAttributeTrailing
+                                  multiplier:1.0f constant:50]];
         
         //VK registration Button
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:vkRegistration attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:facebookButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:20]];
@@ -255,8 +271,7 @@ static NSArray *SCOPE = nil;
 
 - (void) vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result {
     if (result.token) {
-        [self dismissViewControllerAnimated:NO completion:NULL];
-        [self.view addSubview:_webView];
+        
     }
      if (result.error) {
         NSLog(@"Error:%@",result.error);
@@ -268,7 +283,7 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller {
-    [self presentViewController:controller animated:YES completion:NULL];
+    //[self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)vkSdkNeedCaptchaEnter:(VKError *)captchaError {

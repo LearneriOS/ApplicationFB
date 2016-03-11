@@ -389,16 +389,19 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
 
 - (void)segmentSwithcher:(UISegmentedControl *)segment {
     if (segment.selectedSegmentIndex == 0) {
+        
         self.sectionSource = [self getSortedArrayBySection:_phoneContact];
         [self.tableView reloadData];
     }
     
     if (segment.selectedSegmentIndex == 1) {
+        
        self.sectionSource= [self getSortedArrayBySection:_friends];
         [self.tableView reloadData];
     }
     
     if (segment.selectedSegmentIndex == 2) {
+        
         self.sectionSource = [self getSortedArrayBySection:_invates];
         [self.tableView reloadData];
     }
