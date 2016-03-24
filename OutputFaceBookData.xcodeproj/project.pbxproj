@@ -13,6 +13,7 @@
 		D21623B21C737281000306EC /* POOVKTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D21623B01C737281000306EC /* POOVKTableViewCell.xib */; };
 		D225FB851BDA398900711C53 /* POOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D225FB841BDA398900711C53 /* POOCache.m */; };
 		D225FB8A1BDA6CE100711C53 /* String+Md5.m in Sources */ = {isa = PBXBuildFile; fileRef = D225FB891BDA6CE100711C53 /* String+Md5.m */; };
+		D23896651CA04E4800D06C8A /* POOChat.m in Sources */ = {isa = PBXBuildFile; fileRef = D23896641CA04E4800D06C8A /* POOChat.m */; };
 		D24BAD2C1BE7B1BF003C96A9 /* POOFacebookFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAD2B1BE7B1BF003C96A9 /* POOFacebookFeed.m */; };
 		D24BAD301BE7B7E0003C96A9 /* POOFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAD2E1BE7B7E0003C96A9 /* POOFeedTableViewCell.m */; };
 		D24BAD311BE7B7E0003C96A9 /* POOFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D24BAD2F1BE7B7E0003C96A9 /* POOFeedTableViewCell.xib */; };
@@ -21,7 +22,15 @@
 		D2587DBE1C6A22AD006FAB08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2587DBD1C6A22AD006FAB08 /* Assets.xcassets */; };
 		D2587DC11C6A2434006FAB08 /* StringLocalizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D2587DC01C6A2434006FAB08 /* StringLocalizer.m */; };
 		D25E6AF31C5631E00091D256 /* POOContactInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D25E6AF21C5631E00091D256 /* POOContactInfoViewController.m */; };
+		D26918F21C98244000FD90C6 /* POOMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D26918F11C98244000FD90C6 /* POOMessagesViewController.m */; };
+		D26918F41C98280200FD90C6 /* POOMessagesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D26918F31C98280200FD90C6 /* POOMessagesViewController.storyboard */; };
+		D26918F61C98549000FD90C6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26918F51C98548F00FD90C6 /* CoreData.framework */; };
+		D26918FC1C9854D300FD90C6 /* OutputFaceBookData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D26918FA1C9854D300FD90C6 /* OutputFaceBookData.xcdatamodeld */; };
+		D26918FF1C997C5800FD90C6 /* POOUserDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D26918FE1C997C5800FD90C6 /* POOUserDialog.m */; };
+		D26919031C9AA21700FD90C6 /* POOVkMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D26919011C9AA21700FD90C6 /* POOVkMessageTableViewCell.m */; };
+		D26919041C9AA21700FD90C6 /* POOVkMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D26919021C9AA21700FD90C6 /* POOVkMessageTableViewCell.xib */; };
 		D26C192A1C6A3D39007B3CB4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D26C192C1C6A3D39007B3CB4 /* Localizable.strings */; };
+		D26F11251C9F15DA004DE72C /* POORequstManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D26F11241C9F15DA004DE72C /* POORequstManager.m */; };
 		D27085051C5A51B9004B1822 /* POOTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D292873A1BCBFCDE0089E3BE /* POOTableViewCell.xib */; };
 		D292873B1BCBFCDE0089E3BE /* POOTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D29287391BCBFCDE0089E3BE /* POOTableViewCell.m */; };
 		D293A2131C47D0A300EDDF59 /* POOLogInVKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D293A2121C47D0A300EDDF59 /* POOLogInVKViewController.m */; };
@@ -61,6 +70,8 @@
 		D225FB841BDA398900711C53 /* POOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOCache.m; sourceTree = "<group>"; };
 		D225FB881BDA6CE100711C53 /* String+Md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "String+Md5.h"; sourceTree = "<group>"; };
 		D225FB891BDA6CE100711C53 /* String+Md5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "String+Md5.m"; sourceTree = "<group>"; };
+		D23896631CA04E4800D06C8A /* POOChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOChat.h; sourceTree = "<group>"; };
+		D23896641CA04E4800D06C8A /* POOChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOChat.m; sourceTree = "<group>"; };
 		D24BAC2E1BE7A5F2003C96A9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D24BAC301BE7A641003C96A9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D24BAD2A1BE7B1BF003C96A9 /* POOFacebookFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOFacebookFeed.h; sourceTree = "<group>"; };
@@ -79,11 +90,23 @@
 		D25E6AF11C5631E00091D256 /* POOContactInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOContactInfoViewController.h; sourceTree = "<group>"; };
 		D25E6AF21C5631E00091D256 /* POOContactInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOContactInfoViewController.m; sourceTree = "<group>"; };
 		D26773761C1F1E8B00CDB8D5 /* libVKSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libVKSdk.a; path = "../Downloads/vk-ios-sdk-master/build/Debug-iphoneos/libVKSdk.a"; sourceTree = "<group>"; };
+		D26918F01C98244000FD90C6 /* POOMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOMessagesViewController.h; sourceTree = "<group>"; };
+		D26918F11C98244000FD90C6 /* POOMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOMessagesViewController.m; sourceTree = "<group>"; };
+		D26918F31C98280200FD90C6 /* POOMessagesViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = POOMessagesViewController.storyboard; path = ../POOMessagesViewController.storyboard; sourceTree = "<group>"; };
+		D26918F51C98548F00FD90C6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D26918FB1C9854D300FD90C6 /* OutputFaceBookData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OutputFaceBookData.xcdatamodel; sourceTree = "<group>"; };
+		D26918FD1C997C5800FD90C6 /* POOUserDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOUserDialog.h; sourceTree = "<group>"; };
+		D26918FE1C997C5800FD90C6 /* POOUserDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOUserDialog.m; sourceTree = "<group>"; };
+		D26919001C9AA21700FD90C6 /* POOVkMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOVkMessageTableViewCell.h; sourceTree = "<group>"; };
+		D26919011C9AA21700FD90C6 /* POOVkMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOVkMessageTableViewCell.m; sourceTree = "<group>"; };
+		D26919021C9AA21700FD90C6 /* POOVkMessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POOVkMessageTableViewCell.xib; sourceTree = "<group>"; };
 		D26C19281C6A3CF9007B3CB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		D26C19291C6A3CF9007B3CB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		D26C192B1C6A3D39007B3CB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D26C192D1C6A3D40007B3CB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D26C192E1C6A3D8B007B3CB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D26F11231C9F15DA004DE72C /* POORequstManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POORequstManager.h; sourceTree = "<group>"; };
+		D26F11241C9F15DA004DE72C /* POORequstManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POORequstManager.m; sourceTree = "<group>"; };
 		D29287381BCBFCDE0089E3BE /* POOTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOTableViewCell.h; sourceTree = "<group>"; };
 		D29287391BCBFCDE0089E3BE /* POOTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOTableViewCell.m; sourceTree = "<group>"; wrapsLines = 1; };
 		D292873A1BCBFCDE0089E3BE /* POOTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POOTableViewCell.xib; sourceTree = "<group>"; };
@@ -114,6 +137,8 @@
 		D2A8CBDD1BC7CD9A006BF1F6 /* POFriendsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POFriendsListViewController.m; sourceTree = "<group>"; };
 		D2C43ABB1BE3AE7000E0C170 /* POOWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOWebController.h; sourceTree = "<group>"; };
 		D2C43ABC1BE3AE7000E0C170 /* POOWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOWebController.m; sourceTree = "<group>"; };
+		D2C4FECD1CA32D8C00E7F621 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = "Pods/../build/Debug-iphoneos/SDWebImage.framework"; sourceTree = "<group>"; };
+		D2C4FECF1CA32D9100E7F621 /* VK_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VK_ios_sdk.framework; path = "Pods/../build/Debug-iphoneos/VK_ios_sdk.framework"; sourceTree = "<group>"; };
 		D2DEDF881C4AA705006ED545 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		D2F8AC361C4E6A3A00FB1DB0 /* POOPhoneBookContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POOPhoneBookContact.h; sourceTree = "<group>"; };
 		D2F8AC371C4E6A3A00FB1DB0 /* POOPhoneBookContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POOPhoneBookContact.m; sourceTree = "<group>"; };
@@ -131,6 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D26918F61C98549000FD90C6 /* CoreData.framework in Frameworks */,
 				D2F8AC3A1C4E746E00FB1DB0 /* Contacts.framework in Frameworks */,
 				D2FBF0071C1F0BAC005CEACA /* SafariServices.framework in Frameworks */,
 				D2A8CBCE1BC7A9B1006BF1F6 /* FBSDKCoreKit.framework in Frameworks */,
@@ -163,6 +189,9 @@
 				D293A2121C47D0A300EDDF59 /* POOLogInVKViewController.m */,
 				D25E6AF11C5631E00091D256 /* POOContactInfoViewController.h */,
 				D25E6AF21C5631E00091D256 /* POOContactInfoViewController.m */,
+				D26918F01C98244000FD90C6 /* POOMessagesViewController.h */,
+				D26918F11C98244000FD90C6 /* POOMessagesViewController.m */,
+				D26918F31C98280200FD90C6 /* POOMessagesViewController.storyboard */,
 			);
 			name = "VK Controllers";
 			sourceTree = "<group>";
@@ -201,12 +230,12 @@
 		D2840F1D1C53F405002AB1E9 /* FaceBookCell */ = {
 			isa = PBXGroup;
 			children = (
-				D24BAD2D1BE7B7E0003C96A9 /* POOFeedTableViewCell.h */,
-				D24BAD2E1BE7B7E0003C96A9 /* POOFeedTableViewCell.m */,
-				D24BAD2F1BE7B7E0003C96A9 /* POOFeedTableViewCell.xib */,
 				D29287381BCBFCDE0089E3BE /* POOTableViewCell.h */,
 				D29287391BCBFCDE0089E3BE /* POOTableViewCell.m */,
 				D292873A1BCBFCDE0089E3BE /* POOTableViewCell.xib */,
+				D24BAD2D1BE7B7E0003C96A9 /* POOFeedTableViewCell.h */,
+				D24BAD2E1BE7B7E0003C96A9 /* POOFeedTableViewCell.m */,
+				D24BAD2F1BE7B7E0003C96A9 /* POOFeedTableViewCell.xib */,
 				D2FE07C81BD4E6B7004E0C95 /* POOCollectionViewCell.h */,
 				D2FE07C91BD4E6B7004E0C95 /* POOCollectionViewCell.m */,
 				D2FE07CA1BD4E6B7004E0C95 /* POOCollectionViewCell.xib */,
@@ -220,6 +249,9 @@
 				D21623AE1C737281000306EC /* POOVKTableViewCell.h */,
 				D21623AF1C737281000306EC /* POOVKTableViewCell.m */,
 				D21623B01C737281000306EC /* POOVKTableViewCell.xib */,
+				D26919001C9AA21700FD90C6 /* POOVkMessageTableViewCell.h */,
+				D26919011C9AA21700FD90C6 /* POOVkMessageTableViewCell.m */,
+				D26919021C9AA21700FD90C6 /* POOVkMessageTableViewCell.xib */,
 			);
 			name = VKCell;
 			sourceTree = "<group>";
@@ -266,6 +298,10 @@
 				D293A2191C47D23C00EDDF59 /* POOVKUserModel.m */,
 				D2F8AC361C4E6A3A00FB1DB0 /* POOPhoneBookContact.h */,
 				D2F8AC371C4E6A3A00FB1DB0 /* POOPhoneBookContact.m */,
+				D26918FD1C997C5800FD90C6 /* POOUserDialog.h */,
+				D26918FE1C997C5800FD90C6 /* POOUserDialog.m */,
+				D23896631CA04E4800D06C8A /* POOChat.h */,
+				D23896641CA04E4800D06C8A /* POOChat.m */,
 			);
 			name = VKModels;
 			sourceTree = "<group>";
@@ -273,6 +309,9 @@
 		D2A8CB971BC7A62C006BF1F6 = {
 			isa = PBXGroup;
 			children = (
+				D26F11231C9F15DA004DE72C /* POORequstManager.h */,
+				D26F11241C9F15DA004DE72C /* POORequstManager.m */,
+				D26918FA1C9854D300FD90C6 /* OutputFaceBookData.xcdatamodeld */,
 				D26C192C1C6A3D39007B3CB4 /* Localizable.strings */,
 				D2587DBD1C6A22AD006FAB08 /* Assets.xcassets */,
 				D2A8CBD21BC7AA67006BF1F6 /* Frameworks */,
@@ -323,6 +362,9 @@
 		D2A8CBD21BC7AA67006BF1F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D2C4FECF1CA32D9100E7F621 /* VK_ios_sdk.framework */,
+				D2C4FECD1CA32D8C00E7F621 /* SDWebImage.framework */,
+				D26918F51C98548F00FD90C6 /* CoreData.framework */,
 				D2F8AC391C4E746E00FB1DB0 /* Contacts.framework */,
 				D2DEDF881C4AA705006ED545 /* AddressBook.framework */,
 				D20749471C20365E00A6EB2A /* VK_ios_sdk.framework */,
@@ -407,12 +449,14 @@
 			files = (
 				D2A8CBB31BC7A62C006BF1F6 /* LaunchScreen.storyboard in Resources */,
 				D21623B21C737281000306EC /* POOVKTableViewCell.xib in Resources */,
+				D26918F41C98280200FD90C6 /* POOMessagesViewController.storyboard in Resources */,
 				D2FE07CC1BD4E6B7004E0C95 /* POOCollectionViewCell.xib in Resources */,
 				D2587DBE1C6A22AD006FAB08 /* Assets.xcassets in Resources */,
 				D26C192A1C6A3D39007B3CB4 /* Localizable.strings in Resources */,
 				D27085051C5A51B9004B1822 /* POOTableViewCell.xib in Resources */,
 				D2A8CBAE1BC7A62C006BF1F6 /* Main.storyboard in Resources */,
 				D24BAD311BE7B7E0003C96A9 /* POOFeedTableViewCell.xib in Resources */,
+				D26919041C9AA21700FD90C6 /* POOVkMessageTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,17 +520,23 @@
 				D20749521C206AEC00A6EB2A /* POORegistrationViewController.m in Sources */,
 				D24BAD301BE7B7E0003C96A9 /* POOFeedTableViewCell.m in Sources */,
 				D293A21A1C47D23C00EDDF59 /* POOVKUserModel.m in Sources */,
+				D26919031C9AA21700FD90C6 /* POOVkMessageTableViewCell.m in Sources */,
+				D23896651CA04E4800D06C8A /* POOChat.m in Sources */,
 				D2587DC11C6A2434006FAB08 /* StringLocalizer.m in Sources */,
+				D26918F21C98244000FD90C6 /* POOMessagesViewController.m in Sources */,
 				D2A8CBDF1BC7CD9A006BF1F6 /* POFriendsListViewController.m in Sources */,
 				D21623B11C737281000306EC /* POOVKTableViewCell.m in Sources */,
 				D2A8CBA81BC7A62C006BF1F6 /* AppDelegate.m in Sources */,
 				D293A2131C47D0A300EDDF59 /* POOLogInVKViewController.m in Sources */,
 				D225FB851BDA398900711C53 /* POOCache.m in Sources */,
+				D26F11251C9F15DA004DE72C /* POORequstManager.m in Sources */,
+				D26918FC1C9854D300FD90C6 /* OutputFaceBookData.xcdatamodeld in Sources */,
 				D25412DA1BF20CC7000BD9D3 /* POOCollectionViewLayout.m in Sources */,
 				D25E6AF31C5631E00091D256 /* POOContactInfoViewController.m in Sources */,
 				D2FE07D51BD52BA2004E0C95 /* POOFriendPhotoViewController.m in Sources */,
 				D2A8CBA51BC7A62C006BF1F6 /* main.m in Sources */,
 				D2A8CBBC1BC7A684006BF1F6 /* POOFacebookData.m in Sources */,
+				D26918FF1C997C5800FD90C6 /* POOUserDialog.m in Sources */,
 				D2F8AC381C4E6A3A00FB1DB0 /* POOPhoneBookContact.m in Sources */,
 				D2C43ABD1BE3AE7000E0C170 /* POOWebController.m in Sources */,
 				D24BAD341BE7C0E4003C96A9 /* POOFeedViewController.m in Sources */,
@@ -684,6 +734,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D26918FA1C9854D300FD90C6 /* OutputFaceBookData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D26918FB1C9854D300FD90C6 /* OutputFaceBookData.xcdatamodel */,
+			);
+			currentVersion = D26918FB1C9854D300FD90C6 /* OutputFaceBookData.xcdatamodel */;
+			path = OutputFaceBookData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D2A8CB981BC7A62C006BF1F6 /* Project object */;
 }

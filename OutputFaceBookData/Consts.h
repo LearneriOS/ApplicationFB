@@ -15,6 +15,7 @@ static NSInteger const kConstsIndent = 20;
 static NSString *const kConstsTokenKey = @"access_token";
 static NSString *const kConstsUserIdKey = @"user_id";
 static NSString *const kConstsVkSecretKey = @"secret";
+static NSString *const kConstsUserPhotoKey = @"user_photo_100";
 static NSString *const kConstsExpiresInKey = @"expires_in";
 
 

@@ -37,7 +37,6 @@ static POOCache *sharedInstance = nil;
 
 - (void)cacheImage:(UIImage*)image forKey:(NSString*)key {
     [self.imageCache setObject:image forKey:key];
-    NSLog(@"%@",self.imageCache);
 }
 
 - (UIImage*)getCachedImageForKey:(NSString*)key {
@@ -49,7 +48,6 @@ static POOCache *sharedInstance = nil;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *cacheDirectoryName = [documentsDirectory stringByAppendingPathComponent:@"Temp"];
-    NSLog(@"%@",cacheDirectoryName);
     return cacheDirectoryName;
 }
 
@@ -69,8 +67,6 @@ static POOCache *sharedInstance = nil;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *casheTime = [NSDate dateWithTimeIntervalSinceNow:60 * 60 * 2];
-    NSLog(@"%@",casheTime);
-    NSLog(@"%@",[NSDate date]);
     
     [defaults setObject:casheTime forKey:key];
 }
@@ -82,9 +78,11 @@ static POOCache *sharedInstance = nil;
     if ([fileManager fileExistsAtPath:filename])
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        if ([NSData data] >= [defaults objectForKey:key]) {
-            [fileManager removeItemAtPath:filename error:nil];
-            [defaults removeObjectForKey:key];
+        if([defaults objectForKey:key]) {
+            if ([NSData data] >= [defaults objectForKey:key]) {
+                [fileManager removeItemAtPath:filename error:nil];
+                [defaults removeObjectForKey:key];
+        }
         } else {
             if ([[POOCache sharedInstance] getCachedImageForKey:filename]) {
                 return [[POOCache sharedInstance] getCachedImageForKey:filename];

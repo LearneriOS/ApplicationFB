@@ -11,6 +11,7 @@
 #import "POOTESTFriend.h"
 #import "POOFacebookFeed.h"
 #import "POOLogInVKViewController.h"
+#import "POOMessagesViewController.h"
 #import "vkSdk.h"
 #import "StringLocalizer.h"
 #import "Consts.h"
@@ -20,10 +21,21 @@ static NSArray *SCOPE = nil;
 @interface POOFacebookData () <VKSdkDelegate, VKSdkUIDelegate, UIWebViewDelegate>
 
 @property (nonatomic, strong) NSArray *friends;
+@property (nonatomic, strong) UITabBarController *tabBarController;
 
 @end
 
 @implementation POOFacebookData
+
+- (instancetype)init {
+    self = [super init];
+    
+    if(self) {
+        self.tabBarController = [[UITabBarController alloc] init];
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,6 +55,17 @@ static NSArray *SCOPE = nil;
                                                       openURL:url
                                                       sourceApplication:sourceApplication
                                                       annotation:annotation];
+}
+
+- (void)buildTabBar {
+    UINavigationController *navControllerloginViewController = [[UINavigationController alloc] initWithRootViewController:[[POOLogInVKViewController alloc] init]];
+    navControllerloginViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Contacts" image:[UIImage imageNamed:@"DockContacts"] tag:0];
+    
+    UINavigationController *navControllerMessagesViewController = [[UINavigationController alloc] initWithRootViewController:[[POOMessagesViewController alloc] init]];
+    navControllerMessagesViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Message" image:[UIImage imageNamed:@"DockMessages"] tag:1];
+    
+    
+    self.tabBarController.viewControllers = @[navControllerloginViewController, navControllerMessagesViewController];
 }
 
 #pragma mark - Button cliked
@@ -151,10 +174,10 @@ static NSArray *SCOPE = nil;
     [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
         if (state == VKAuthorizationAuthorized) {
             
-            POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-            [self presentViewController:navController animated:YES completion:NULL];
+            [self buildTabBar];
+            [self presentViewController:self.tabBarController animated:YES completion:NULL];
         } else {
+            
             [VKSdk authorize:SCOPE];
         }
     }];
@@ -242,11 +265,11 @@ static NSArray *SCOPE = nil;
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:result.token.expiresIn] forKey:kConstsExpiresInKey];
         [[NSUserDefaults standardUserDefaults] setObject:result.user.id forKey:kConstsUserIdKey];
         [[NSUserDefaults standardUserDefaults] setObject:result.token.secret forKey:kConstsVkSecretKey];
+        [[NSUserDefaults standardUserDefaults ] setObject:result.user.photo_100 forKey:kConstsUserPhotoKey];
         
-        POOLogInVKViewController *loginViewController = [[POOLogInVKViewController alloc] init];
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+        [self buildTabBar];
         
-        [self presentViewController:navController animated:YES completion:NULL];
+        [self presentViewController:self.tabBarController animated:YES completion:NULL];
     }
      if (result.error) {
         NSLog(@"Error:%@",result.error);

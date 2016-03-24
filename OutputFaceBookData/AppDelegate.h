@@ -28,5 +28,12 @@
 @property (nonatomic, strong) POOWebController *webViewController;
 @property (nonatomic, strong) POOFeedViewController *feedViewController;
 
+@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+- (NSString *)applicationDocumentsDirectory;
+- (void)saveContext;
+
 @end
 

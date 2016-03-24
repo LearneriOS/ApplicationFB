@@ -17,23 +17,23 @@
 #import "StringLocalizer.h"
 #import "POOVKTableViewCell.h"
 #import "Consts.h"
+#import "POORequstManager.h"
 
 typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSError *error);
 
 @interface POOLogInVKViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
 
-@property (nonatomic, strong) UISearchController *searchController;
-@property (nonatomic, strong) UISegmentedControl *segmentController;
-@property (nonatomic, strong) NSMutableArray *friends;
-@property (nonatomic, strong) NSMutableArray *groupOfContact;
-@property (nonatomic, strong) NSMutableArray *phoneContact;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableDictionary *namesBySection;
-@property (nonatomic, strong) NSArray *sectionSource;
-@property (nonatomic, strong) NSMutableArray *invates;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) UISegmentedControl *segmentController;
+@property (strong, nonatomic) NSArray *friends;
+@property (strong, nonatomic) NSMutableArray *groupOfContact;
+@property (strong, nonatomic) NSMutableArray *phoneContact;
+@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) NSMutableDictionary *namesBySection;
+@property (strong, nonatomic) NSArray *sectionSource;
+@property (strong, nonatomic)NSArray *invates;
 
-@property (nonatomic, strong) NSString *userId;
-@property (nonatomic, strong) NSString *userToken;
+@property (strong, nonatomic) NSString *userId;
 
 @end
 
@@ -44,13 +44,12 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
     self = [super init];
     if (self != nil) {
         self.userId = [[NSUserDefaults standardUserDefaults] objectForKey:kConstsUserIdKey];
-        self.userToken = [[NSUserDefaults standardUserDefaults] objectForKey:kConstsTokenKey];
         self.groupOfContact = [[NSMutableArray alloc] init];
-        self.friends = [[NSMutableArray alloc] init];
+        self.friends = [[NSArray alloc] init];
         self.namesBySection = [[NSMutableDictionary alloc] init];
         self.sectionSource = [[NSMutableArray alloc] init];
         self.phoneContact = [[NSMutableArray alloc] init];
-        self.invates = [[NSMutableArray alloc] init];
+        self.invates = [[NSArray alloc] init];
     }
     
     return self;
@@ -69,6 +68,10 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
     self.sectionSource = [self getSortedArrayBySection:_phoneContact];
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)setBookContact {
     for (CNContact *contact in _groupOfContact) {
         POOPhoneBookContact *phoneContact = [[POOPhoneBookContact alloc] initWithContact:contact];
@@ -78,83 +81,87 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
 
 - (NSArray *)getSortedArrayBySection:(NSArray *)array {
     [self.namesBySection removeAllObjects];
-    NSMutableArray *sectionKey = [[NSMutableArray alloc] init];
-    
+    NSMutableArray *sectionsKey = [[NSMutableArray alloc] init];
+    NSInteger important = 0;
+
     for (id object in array) {
         if ([object isKindOfClass:[POOPhoneBookContact class]]) {
-            POOPhoneBookContact *contact = (POOPhoneBookContact *)object;
-            NSString *sectionName = [contact.name substringToIndex:1];
-            NSMutableArray *nameInSection = nil;
-            
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF == %@", sectionName];
-            NSArray *foundSection = [sectionKey filteredArrayUsingPredicate:predicate];
-            
-            if (foundSection.count) {
-                nameInSection = [_namesBySection objectForKey:sectionName];
-            } else {
-                nameInSection = [NSMutableArray array];
-                [sectionKey addObject:sectionName];
-            }
-            
-            [nameInSection addObject:contact];
-            [_namesBySection setObject:nameInSection forKey:sectionName];
+            [self creatArrayPhoneBookContacts:object sectionsKey:sectionsKey];
         } else {
-            POOVKUserModel *user = (POOVKUserModel *)object;
-            NSString *sectionName = [user.name substringToIndex:1];
-            NSMutableArray *nameInSection = nil;
-            
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF == %@", sectionName];
-            NSArray *foundSection = [sectionKey filteredArrayUsingPredicate:predicate];
-            
-            if (foundSection.count) {
-                nameInSection = [_namesBySection objectForKey:sectionName];
-            } else {
-                nameInSection = [NSMutableArray array];
-                [sectionKey addObject:sectionName];
-            }
-            
-            [nameInSection addObject:user];
-            [_namesBySection setObject:nameInSection forKey:sectionName];
+            [self creatArrayUsersModel:object sectionsKey:sectionsKey important:important];
+            important++;
         }
     }
     
-    return [sectionKey sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    [sectionsKey sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        if ([obj1 isEqual: @"Important"])
+            return NSOrderedSame;
+        
+        else if (obj1 < obj2 )
+            return NSOrderedAscending;
+        else
+            return NSOrderedDescending;
+    }];
+    
+    return sectionsKey;
+}
+
+- (void)creatArrayUsersModel:(id)object sectionsKey:(NSMutableArray *)sectionsKey important:(NSInteger)important {
+    POOVKUserModel *user = (POOVKUserModel *)object;
+    NSString *sectionName;
+
+    if (important > 4 || self.segmentController.selectedSegmentIndex == 2) {
+        sectionName = [user.name substringToIndex:1];
+    } else {
+        sectionName = [@"importantKey" localized];
+    }
+    
+    NSMutableArray *nameInSection = nil;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF == %@", sectionName];
+    NSArray *foundSection = [sectionsKey filteredArrayUsingPredicate:predicate];
+    
+    if (foundSection.count) {
+        nameInSection = [_namesBySection objectForKey:sectionName];
+    } else {
+        nameInSection = [NSMutableArray array];
+        [sectionsKey addObject:sectionName];
+    }
+    
+    [nameInSection addObject:user];
+    [_namesBySection setObject:nameInSection forKey:sectionName];
+}
+
+- (void)creatArrayPhoneBookContacts:(id)object sectionsKey:(NSMutableArray *)sectionsKey {
+    POOPhoneBookContact *contact = (POOPhoneBookContact *)object;
+    NSString *sectionName = [contact.name substringToIndex:1];
+    NSMutableArray *nameInSection = nil;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF == %@", sectionName];
+    NSArray *foundSection = [sectionsKey filteredArrayUsingPredicate:predicate];
+    
+    if (foundSection.count) {
+        nameInSection = [_namesBySection objectForKey:sectionName];
+    } else {
+        nameInSection = [NSMutableArray array];
+        [sectionsKey addObject:sectionName];
+    }
+    
+    [nameInSection addObject:contact];
+    [_namesBySection setObject:nameInSection forKey:sectionName];
 }
 
 #pragma mark - Get Contacts, Friends, Invate methods
 - (void)getInvites {
-    NSString *md5 = [[NSString
-                      stringWithFormat:@"/method/friends.getRequests?extended=1&need_mutual=1&out=1&access_token=%@%@",
-                      _userToken,[[NSUserDefaults standardUserDefaults] objectForKey:@"secret"]]
-                      MD5Hash];
     
-    NSString *stringFriendsRequest2 = [NSString
-                                       stringWithFormat:@"https://api.vk.com/method/friends.getRequests?extended=1&need_mutual=1&out=1&access_token=%@&sig=%@",
-                                       _userToken, md5];
-    //TODO:fix
-    [self doRequestByStringWithBlock:stringFriendsRequest2 block:^(NSUInteger code, NSDictionary *response, NSError *error) {
-        if (response != nil) {
-            for (NSDictionary *userId in response) {
-                
-                NSString *stringFriendsRequest = [NSString
-                                                  stringWithFormat:@"http://api.vk.com/method/users.get?user_id=%@&order=hints&fields=online,photo_100",
-                                                  [userId objectForKey:@"uid"]];
-                //TODO:fix
-                [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSUInteger code, NSDictionary *response, NSError *error) {
-                    if (response != nil) {
-                        
-                        for (NSDictionary *inviter in response) {
-                            
-                            POOVKUserModel *vkUser = [[POOVKUserModel alloc] initWithDictionary:inviter];
-                            [_invates addObject:vkUser];
-                        }
-                    } else {
-                        
-                        //TODO:make some code
-                    }
-                }];
-            }
-        }
+    [POORequstManager getInvitesWith:YES needMutual:YES out:YES block:^(NSArray *response, NSError *error) {
+        self.invates = response;
+    }];
+}
+
+- (void)getVKFriends {
+    [POORequstManager getFriendsInfoWithId:self.userId order:@"hints" block:^(NSArray *response, NSError *error) {
+        self.friends = response;
     }];
 }
 
@@ -179,70 +186,13 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
     }
 }
 
-- (void)getVKFriends {
-    NSString *stringFriendsRequest = [NSString
-                                      stringWithFormat:@"http://api.vk.com/method/friends.get?user_id=%@&order=hints&fields=online,photo_100",
-                                      _userId];
-    
-    [self doRequestByStringWithBlock:stringFriendsRequest block:^(NSUInteger code, NSDictionary *response, NSError *error) {
-        if (response != nil) {
-            
-            for (NSDictionary *user in response) {
-                
-                POOVKUserModel *userModel = [[POOVKUserModel alloc] initWithDictionary:user];
-                [_friends addObject:userModel];
-            }
-        } else {
-            
-            //TODO:make some code
-        }
-    }];
-}
-
-#pragma mark - Request
-- (void)doRequestByStringWithBlock:(NSString *)stringRequest block:(CompletionHandler)completionHandler {
-    NSURL *chekPhoneURL = [NSURL URLWithString:stringRequest];
-    NSURLRequest *checkPhoneRequest = [NSURLRequest requestWithURL:chekPhoneURL];
-    
-    NSURLSessionDataTask *checkPhoneDataTask = [[NSURLSession sharedSession] dataTaskWithRequest:checkPhoneRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (completionHandler) {
-            if (error) {
-                completionHandler(0, nil, error);
-            } else {
-                NSError *jsonError;
-                NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-                if(jsonError) {
-                    NSLog(@"json error : %@", [jsonError localizedDescription]);
-                    id idRespons = [jsonDictionary objectForKey:@"response"];
-                    if ([idRespons isKindOfClass:[NSNumber class]]) {
-                        
-                        completionHandler(((NSNumber *) idRespons).integerValue, nil, jsonError);
-                    }
-                } else if([jsonDictionary objectForKey:@"response"]) {
-                    id idRespons = [jsonDictionary objectForKey:@"response"];
-                    if ([idRespons isKindOfClass:[NSNumber class]]) {
-                        
-                        completionHandler(((NSNumber *) idRespons).integerValue, nil, nil);
-                    } else {
-                        completionHandler(0, [jsonDictionary objectForKey:@"response"], nil);
-                    }
-                } else {
-                    completionHandler(0, [[jsonDictionary objectForKey:@"error"] objectForKey:@"error_code"], jsonError);
-                }
-            }
-        }
-    }];
-    
-    [checkPhoneDataTask resume];
-}
-
 #pragma mark - Table
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     return _sectionSource;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _namesBySection.allKeys.count;
+    return _namesBySection.allKeys.count ;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -397,7 +347,7 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
     
     if (segment.selectedSegmentIndex == 1) {
         
-       self.sectionSource= [self getSortedArrayBySection:_friends];
+        self.sectionSource = [self getSortedArrayBySection:_friends];
         [self.tableView reloadData];
     }
     

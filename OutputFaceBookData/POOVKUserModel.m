@@ -21,7 +21,7 @@
             
             _online = ((NSNumber *)objectOnline).integerValue;
         }
-        _image = [dictionary objectForKey:@"photo_100"];
+        _image = [dictionary objectForKey:@"photo"];
         
         return self;
     }
