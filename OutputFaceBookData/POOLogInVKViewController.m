@@ -93,7 +93,11 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
         }
     }
     
-    [sectionsKey sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+    return [self sortedKeys:sectionsKey];
+}
+
+- (NSArray *)sortedKeys:(NSMutableArray *)keys {
+    [keys sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         if ([obj1 isEqual: @"Important"])
             return NSOrderedSame;
         
@@ -103,7 +107,7 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
             return NSOrderedDescending;
     }];
     
-    return sectionsKey;
+    return [keys copy];
 }
 
 - (void)creatArrayUsersModel:(id)object sectionsKey:(NSMutableArray *)sectionsKey important:(NSInteger)important {
