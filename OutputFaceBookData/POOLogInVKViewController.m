@@ -192,7 +192,11 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
 
 #pragma mark - Table
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return _sectionSource;
+    if (self.segmentController.selectedSegmentIndex == 1) {
+        return [_sectionSource subarrayWithRange:NSMakeRange(1, self.sectionSource.count - 1)];
+    } else {
+        return _sectionSource;
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -277,28 +281,48 @@ typedef void (^CompletionHandler)(NSUInteger code, NSDictionary *response, NSErr
     
     if (![searchString isEqualToString:@""]) {
         if (_segmentController.selectedSegmentIndex == 0) {
-            for (POOPhoneBookContact *contact in _phoneContact) {
-                if ([contact.name localizedCaseInsensitiveContainsString:searchString] || [contact.secondName localizedCaseInsensitiveContainsString:searchString]) {
-                    [filtreadArray addObject:contact];
-                }
-            }
+            [self addContactsToArray:filtreadArray bySearchString:searchString];
+        } if (_segmentController.selectedSegmentIndex == 1) {
+            [self addFriendsToArray:filtreadArray bySearchString:searchString];
         } else {
-            for (POOVKUserModel *friend in _friends) {
-                if ([friend.name localizedCaseInsensitiveContainsString:searchString] || [friend.lastName localizedCaseInsensitiveContainsString:searchString]) {
-                    [filtreadArray addObject:friend];
-                }
-            }
+            [self addInvitesToArray:filtreadArray bySearchString:searchString];
         }
         _sectionSource = [self getSortedArrayBySection:filtreadArray];
     } else {
         if (_segmentController.selectedSegmentIndex == 0) {
             _sectionSource = [self getSortedArrayBySection:_phoneContact];
-        } else {
+        } if (_segmentController.selectedSegmentIndex == 1) {
             _sectionSource = [self getSortedArrayBySection:_friends];
+        } else {
+            _sectionSource = [self getSortedArrayBySection:_invates];
         }
     }
     
     [_tableView reloadData];
+}
+
+- (void) addContactsToArray:(NSMutableArray *)array bySearchString:(NSString *)searchString {
+    for (POOPhoneBookContact *contact in _phoneContact) {
+        if ([contact.name localizedCaseInsensitiveContainsString:searchString] || [contact.secondName localizedCaseInsensitiveContainsString:searchString]) {
+            [array addObject:contact];
+        }
+    }
+}
+
+- (void) addFriendsToArray:(NSMutableArray *)array bySearchString:(NSString *)searchString {
+    for (POOVKUserModel *friend in _friends) {
+        if ([friend.name localizedCaseInsensitiveContainsString:searchString] || [friend.lastName localizedCaseInsensitiveContainsString:searchString]) {
+            [array addObject:friend];
+        }
+    }
+}
+
+- (void) addInvitesToArray:(NSMutableArray *)array bySearchString:(NSString *)searchString {
+    for (POOVKUserModel *friend in _invates) {
+        if ([friend.name localizedCaseInsensitiveContainsString:searchString] || [friend.lastName localizedCaseInsensitiveContainsString:searchString]) {
+            [array addObject:friend];
+        }
+    }
 }
 
 #pragma mark - UI
